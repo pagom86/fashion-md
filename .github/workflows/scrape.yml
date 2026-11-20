@@ -1,0 +1,29 @@
+name: Scrape Fashion Products
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 매일 오전 9시 (UTC 0시 = KST 9시)
+  workflow_dispatch:  # 수동 실행 버튼
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install puppeteer-extra puppeteer-extra-plugin-stealth
+      - name: Run scraper
+        run: node scraper/index.js
+        env:
+          PROXY_USER: uvddudvm
+          PROXY_PASS: tpb3d5pqmlcr
+      - name: Commit results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/products.json
+          git diff --staged --quiet || git commit -m "Update products"
+          git push
