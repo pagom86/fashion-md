@@ -13,17 +13,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install dependencies
-        run: npm install puppeteer puppeteer-core puppeteer-extra puppeteer-extra-plugin-stealth
       - name: Run scraper
         run: node scraper/index.js
-        env:
-          PROXY_USER: uvddudvm
-          PROXY_PASS: tpb3d5pqmlcr
       - name: Commit results
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data/products.json
           git diff --staged --quiet || git commit -m "Update products"
+          git pull --rebase origin main
           git push
