@@ -38,20 +38,42 @@ async function scrapeMusinsa() {
       const dehydrated = pageProps?.dehydratedState;
       const queries = dehydrated?.queries || [];
 
-      // 모든 쿼리에서 goods 배열 찾기
+      // 상품 배열인지 확인 (goodsNo 또는 productNo 필드 존재 여부)
+      function isProductArray(arr) {
+        if (!Array.isArray(arr) || arr.length === 0) return false;
+        const first = arr[0];
+        return !!(first.goodsNo || first.productNo || first.itemNo || first.goods_no ||
+                  (first.name && (first.price || first.imageUrl)));
+      }
+
+      // 모든 쿼리에서 상품 배열 재귀 탐색
+      function findProducts(obj, depth = 0) {
+        if (depth > 5 || !obj || typeof obj !== 'object') return null;
+        if (isProductArray(obj)) return obj;
+        if (Array.isArray(obj)) {
+          for (const item of obj) {
+            const found = findProducts(item, depth + 1);
+            if (found) return found;
+          }
+          return null;
+        }
+        for (const key of Object.keys(obj)) {
+          const val = obj[key];
+          if (Array.isArray(val) && val.length > 2) {
+            if (isProductArray(val)) return val;
+          } else if (val && typeof val === 'object') {
+            const found = findProducts(val, depth + 1);
+            if (found) return found;
+          }
+        }
+        return null;
+      }
+
       let goods = null;
       for (const q of queries) {
         const d = q?.state?.data;
         if (!d) continue;
-        // 가능한 경로들
-        const candidates = [
-          d?.goods, d?.list, d?.items,
-          d?.pages?.[0]?.goods, d?.pages?.[0]?.list,
-          d?.data?.goods, d?.data?.list,
-        ];
-        for (const c of candidates) {
-          if (Array.isArray(c) && c.length > 0) { goods = c; break; }
-        }
+        goods = findProducts(d);
         if (goods) break;
       }
 
