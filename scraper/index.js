@@ -156,23 +156,36 @@ async function scrape29CM() {
         };
       }
 
-      // DOM 선택자 시도 - 더 넓은 범위
-      const links = Array.from(document.querySelectorAll('a[href*="itemNo"], a[href*="/product/"]'));
+      // DOM 선택자 - 카드 단위로 추출
+      const cards = Array.from(document.querySelectorAll('[class*="ProductCard"], [class*="product_card"], [class*="ItemCard"], [class*="item_card"]'));
+      const links = cards.length > 0 ? cards : Array.from(document.querySelectorAll('a[href*="itemNo"]'));
       const seen = new Set();
       const items = [];
-      links.forEach(a => {
-        if (seen.has(a.href)) return;
+      links.forEach(el => {
+        const a = el.tagName === 'A' ? el : el.querySelector('a');
+        if (!a || seen.has(a.href)) return;
         seen.add(a.href);
-        const img = a.querySelector('img') || a.closest('[class]')?.querySelector('img');
-        const textEls = a.querySelectorAll('p, span, div');
-        const name = Array.from(textEls).find(el => el.innerText?.trim().length > 2)?.innerText?.trim();
-        if (name) {
+
+        const img = el.querySelector('img');
+        // 텍스트 블록에서 브랜드/이름/가격 분리
+        const rawText = el.innerText || '';
+        const parts = rawText.split('\n').map(s => s.trim()).filter(Boolean);
+        // parts: [brand, name, discount%, price, ...]
+        const brand = parts[0] || '';
+        const name = parts[1] || parts[0] || '';
+        const priceStr = parts.find(p => p.match(/^[\d,]+$/));
+        const price = priceStr ? parseInt(priceStr.replace(/,/g, '')) : 0;
+        const discountStr = parts.find(p => p.match(/^\d+%$/));
+        const discount = discountStr ? parseInt(discountStr) : null;
+
+        if (name && name !== brand) {
           items.push({
             id: Math.random().toString(36).slice(2),
             site: 'cm29',
             name,
-            brand: '',
-            price: 0,
+            brand,
+            price,
+            discount,
             imageUrl: img?.src || img?.dataset?.src || null,
             productUrl: a.href.startsWith('http') ? a.href : 'https://www.29cm.co.kr' + a.href,
             category: '',

@@ -17,10 +17,12 @@ jobs:
         run: npm install puppeteer puppeteer-core puppeteer-extra puppeteer-extra-plugin-stealth
       - name: Run scraper
         run: node scraper/index.js
+      - name: Generate page
+        run: node scraper/generate-page.js
       - name: Commit results
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data/products.json
-          git diff --staged --quiet || git commit -m "Update products"
+          git add data/products.json docs/index.html
+          git diff --staged --quiet || git commit -m "Update products & page"
           git push --force-with-lease
