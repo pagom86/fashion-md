@@ -56,25 +56,29 @@ async function scrapeMusinsa() {
       }
 
       if (goods && Array.isArray(goods)) {
+        const firstKeys = goods[0] ? Object.keys(goods[0]).join(',') : '';
+        const items = goods.slice(0, 40).map(g => {
+          // 모든 가능한 필드명 시도
+          const name = g.goodsName || g.name || g.goods_name || g.title || g.item_name || '';
+          const brand = g.brandName || g.brand?.name || g.brand_name || '';
+          const price = g.normalPrice || g.price || g.salePrice || g.sale_price || 0;
+          const imageUrl = g.goodsImgSrc || g.imageUrl || g.thumbnail || g.image || g.img || null;
+          const id = String(g.goodsNo || g.no || g.id || Math.random().toString(36).slice(2));
+          const productUrl = `https://www.musinsa.com/app/goods/${g.goodsNo || g.no || g.id}`;
+          return { id, site: 'musinsa', name, brand, price, imageUrl, productUrl };
+        }).filter(g => g.name);
+
         return {
-          items: goods.slice(0, 40).map(g => ({
-            id: String(g.goodsNo || g.no || g.id || Math.random().toString(36).slice(2)),
-            site: 'musinsa',
-            name: g.goodsName || g.name || '',
-            brand: g.brandName || g.brand?.name || '',
-            price: g.normalPrice || g.price || g.salePrice || 0,
-            imageUrl: g.goodsImgSrc || g.imageUrl || g.thumbnail || null,
-            productUrl: `https://www.musinsa.com/app/goods/${g.goodsNo || g.no || g.id}`,
-            category: g.categoryName || '',
-          })).filter(g => g.name),
-          debug: `found goods in dehydratedState queries: ${goods.length} items`,
+          items,
+          debug: `found goods[${goods.length}] keys: ${firstKeys}, mapped: ${items.length}`,
         };
       }
 
       // 쿼리 구조 로깅
       const firstQueryData = queries[0]?.state?.data;
       const firstKeys = firstQueryData ? Object.keys(firstQueryData) : [];
-      return { items: [], debug: `queries: ${queries.length}, first query data keys: ${firstKeys.join(',')}` };
+      const nestedKeys = firstQueryData ? JSON.stringify(firstQueryData).substring(0, 300) : '';
+      return { items: [], debug: `queries: ${queries.length}, data keys: ${firstKeys.join(',')}, sample: ${nestedKeys}` };
     });
 
     console.log('[musinsa] debug:', products.debug);
