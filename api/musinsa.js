@@ -6,14 +6,14 @@ export default async function handler(req, res) {
   const catMap = { outer:'002', top:'001', bottom:'003', shoes:'005', acc:'007', bag:'004' };
   const catCode = catMap[category] || '';
 
+  const SCRAPER_KEY = '6c6ed6d95256b0524d43edc73fc96ba5';
+
   try {
     const target = `https://www.musinsa.com/api2/dp/v1/plp/goods?gf=A&sortCode=NEW_DATE&page=1&size=24${catCode ? `&category=${catCode}` : ''}`;
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(target)}`;
+    const url = `https://api.scraperapi.com?api_key=${SCRAPER_KEY}&url=${encodeURIComponent(target)}`;
 
-    const r = await fetch(proxyUrl);
-    const wrapper = await r.json();
-    const text = wrapper.contents;
-
+    const r = await fetch(url);
+    const text = await r.text();
     const data = JSON.parse(text);
     const list = data?.data?.list || data?.list || [];
 
