@@ -1,16 +1,16 @@
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   
-  // 네이버 쇼핑 API 살아있는지 테스트
-  const r = await fetch('https://openapi.naver.com/v1/search/shop.json?query=무신사+아우터&display=10&sort=date', {
+  const r = await fetch('https://www.wconcept.co.kr/Product/ListAjax?category=001&sort=new&page=1&pageSize=20', {
     headers: {
-      'X-Naver-Client-Id': 'test',
-      'X-Naver-Client-Secret': 'test',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36',
+      'Accept': 'application/json, text/plain, */*',
+      'Referer': 'https://www.wconcept.co.kr',
     }
   });
   
   res.status(200).json({ 
     httpStatus: r.status,
-    alive: r.status === 401 || r.status === 400,  // 401/400이면 API 살아있음
+    snippet: (await r.text()).slice(0, 500)
   });
 }
