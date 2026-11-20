@@ -17,6 +17,8 @@ const PROXIES = [
 
 async function scrapeProducts(url, site) {
   const proxy = PROXIES[Math.floor(Math.random() * PROXIES.length)];
+  console.log(`[${site}] Using proxy: ${proxy}`);
+
   const browser = await puppeteer.launch({
     headless: 'new',
     args: [
@@ -29,56 +31,113 @@ async function scrapeProducts(url, site) {
   const page = await browser.newPage();
   await page.authenticate({ username: PROXY_USER, password: PROXY_PASS });
   await page.setViewport({ width: 1280, height: 800 });
+  await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
   try {
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
     await new Promise(r => setTimeout(r, 3000));
 
+    const pageTitle = await page.title();
+    const pageUrl = page.url();
+    console.log(`[${site}] Title: ${pageTitle}`);
+    console.log(`[${site}] URL: ${pageUrl}`);
+
+    // 페이지 HTML 일부 확인
+    const bodyText = await page.evaluate(() => document.body.innerHTML.substring(0, 500));
+    console.log(`[${site}] Body preview: ${bodyText}`);
+
     const products = await page.evaluate((siteName) => {
       const items = [];
+
       if (siteName === 'musinsa') {
-        document.querySelectorAll('[class*="goods_li"], [class*="goodsItem"], li[data-no]').forEach(el => {
-          const img = el.querySelector('img');
-          const name = el.querySelector('[class*="goodsName"], [class*="goods_name"]');
-          const brand = el.querySelector('[class*="brandName"], [class*="brand_name"]');
-          const price = el.querySelector('[class*="price"]');
-          const link = el.querySelector('a');
-          const id = el.getAttribute('data-no') || el.getAttribute('data-id');
-          if (name && link) {
-            items.push({
-              id: id || Math.random().toString(),
-              site: 'musinsa',
-              name: name.innerText.trim(),
-              brand: brand ? brand.innerText.trim() : '',
-              price: price ? parseInt(price.innerText.replace(/[^0-9]/g, '')) : 0,
-              imageUrl: img ? img.src : null,
-              productUrl: link.href,
-            });
+        // 여러 선택자 시도
+        const selectors = [
+          'li[data-no]',
+          '[class*="goods_li"]',
+          '[class*="goodsItem"]',
+          '[class*="product-item"]',
+          '[class*="GoodsItem"]',
+          'ul.goods_list li',
+          '.list_goods li',
+        ];
+
+        let found = null;
+        for (const sel of selectors) {
+          const els = document.querySelectorAll(sel);
+          if (els.length > 0) {
+            console.log('Found with selector:', sel, 'count:', els.length);
+            found = els;
+            break;
           }
-        });
+        }
+
+        if (found) {
+          found.forEach(el => {
+            const img = el.querySelector('img');
+            const nameEl = el.querySelector('[class*="goodsName"], [class*="goods_name"], [class*="product_name"], h3, h4, [class*="name"]');
+            const brandEl = el.querySelector('[class*="brandName"], [class*="brand_name"], [class*="brand"]');
+            const priceEl = el.querySelector('[class*="price"]');
+            const linkEl = el.querySelector('a');
+            const id = el.getAttribute('data-no') || el.getAttribute('data-id');
+            if (nameEl && linkEl) {
+              items.push({
+                id: id || Math.random().toString(36).slice(2),
+                site: 'musinsa',
+                name: nameEl.innerText.trim(),
+                brand: brandEl ? brandEl.innerText.trim() : '',
+                price: priceEl ? parseInt(priceEl.innerText.replace(/[^0-9]/g, '')) : 0,
+                imageUrl: img ? (img.src || img.dataset.src) : null,
+                productUrl: linkEl.href,
+              });
+            }
+          });
+        }
+
       } else if (siteName === 'cm29') {
-        document.querySelectorAll('[class*="product_item"], [class*="ProductCard"]').forEach(el => {
-          const img = el.querySelector('img');
-          const name = el.querySelector('[class*="product_name"], [class*="ProductName"]');
-          const brand = el.querySelector('[class*="brand"]');
-          const price = el.querySelector('[class*="price"]');
-          const link = el.querySelector('a');
-          if (name && link) {
-            items.push({
-              id: Math.random().toString(),
-              site: 'cm29',
-              name: name.innerText.trim(),
-              brand: brand ? brand.innerText.trim() : '',
-              price: price ? parseInt(price.innerText.replace(/[^0-9]/g, '')) : 0,
-              imageUrl: img ? img.src : null,
-              productUrl: link.href.startsWith('http') ? link.href : 'https://www.29cm.co.kr' + link.href,
-            });
+        const selectors = [
+          '[class*="ProductCard"]',
+          '[class*="product_item"]',
+          '[class*="product-item"]',
+          '[class*="ItemCard"]',
+          '[class*="item_card"]',
+          'article',
+        ];
+
+        let found = null;
+        for (const sel of selectors) {
+          const els = document.querySelectorAll(sel);
+          if (els.length > 0) {
+            found = els;
+            break;
           }
-        });
+        }
+
+        if (found) {
+          found.forEach(el => {
+            const img = el.querySelector('img');
+            const nameEl = el.querySelector('[class*="product_name"], [class*="ProductName"], [class*="item_name"], [class*="name"], p, span');
+            const brandEl = el.querySelector('[class*="brand"]');
+            const priceEl = el.querySelector('[class*="price"]');
+            const linkEl = el.querySelector('a');
+            if (nameEl && linkEl) {
+              items.push({
+                id: Math.random().toString(36).slice(2),
+                site: 'cm29',
+                name: nameEl.innerText.trim(),
+                brand: brandEl ? brandEl.innerText.trim() : '',
+                price: priceEl ? parseInt(priceEl.innerText.replace(/[^0-9]/g, '')) : 0,
+                imageUrl: img ? (img.src || img.dataset.src) : null,
+                productUrl: linkEl.href.startsWith('http') ? linkEl.href : 'https://www.29cm.co.kr' + linkEl.href,
+              });
+            }
+          });
+        }
       }
+
       return items.slice(0, 50);
     }, site);
 
+    console.log(`[${site}] Found ${products.length} products`);
     await browser.close();
     return products;
   } catch (e) {
