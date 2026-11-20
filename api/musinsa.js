@@ -9,37 +9,34 @@ export default async function handler(req, res) {
   const SCRAPER_KEY = '6c6ed6d95256b0524d43edc73fc96ba5';
 
   try {
-    const pageUrl = `https://www.musinsa.com/categories/item/${catCode || '0'}/list?sortCode=NEW_DATE&page=1`;
-    const url = `https://api.scraperapi.com/?api_key=${SCRAPER_KEY}&url=${encodeURIComponent(pageUrl)}&render=true`;
+    const pageUrl = `https://www.musinsa.com/app/items/lists?category_code=${catCode}&sort=new&page=1&display_cnt=90`;
+    const url = `https://api.scraperapi.com/?api_key=${SCRAPER_KEY}&url=${encodeURIComponent(pageUrl)}`;
 
     const r = await fetch(url);
     const html = await r.text();
 
-    // __NEXT_DATA__ 추출
-    const match = html.match(/<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/);
-    if (!match) {
-      return res.status(200).json({ items: [], debug: 'no_next_data', snippet: html.slice(0, 300) });
+    const items = [];
+    const re = /<li[^>]+class="[^"]*listItem[^"]*"[^>]*data-no="(\d+)"[\s\S]*?<img[^>]+src="([^"]+)"[^>]*>[\s\S]*?class="[^"]*brand[^"]*"[^>]*>([^<]+)<[\s\S]*?class="[^"]*goodsName[^"]*"[^>]*>([^<]+)<[\s\S]*?class="[^"]*price[^"]*"[^>]*>([\d,]+)/g;
+
+    let m;
+    while ((m = re.exec(html)) !== null) {
+      const imgUrl = m[2].startsWith('//') ? 'https:' + m[2] : m[2];
+      items.push({
+        id: m[1],
+        site: 'musinsa',
+        brand: m[3].trim(),
+        name: m[4].trim(),
+        price: parseInt(m[5].replace(/,/g, ''), 10),
+        originalPrice: null,
+        discount: null,
+        imageUrl: imgUrl,
+        productUrl: `https://www.musinsa.com/app/goods/${m[1]}`,
+      });
     }
 
-    const nd = JSON.parse(match[1]);
-    const rawList =
-      nd?.props?.pageProps?.dehydratedState?.queries?.[0]?.state?.data?.pages?.[0]?.list ||
-      nd?.props?.pageProps?.goods ||
-      nd?.props?.pageProps?.items ||
-      nd?.props?.pageProps?.goodsList ||
-      [];
-
-    const items = rawList.map(p => ({
-      id: String(p.goodsNo || p.id || Math.random()),
-      site: 'musinsa',
-      brand: p.brandName || p.brand?.name || '',
-      name: p.goodsName || p.name || '',
-      price: p.price || 0,
-      originalPrice: p.normalPrice || p.originalPrice || null,
-      discount: p.discountRate || null,
-      imageUrl: p.thumbnail ? (p.thumbnail.startsWith('//') ? 'https:' + p.thumbnail : p.thumbnail) : null,
-      productUrl: `https://www.musinsa.com/app/goods/${p.goodsNo || p.id}`,
-    }));
+    if (items.length === 0) {
+      return res.status(200).json({ items: [], debug: 'no_items_parsed', snippet: html.slice(0, 800) });
+    }
 
     res.status(200).json({ items });
   } catch (e) {
