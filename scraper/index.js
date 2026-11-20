@@ -34,14 +34,26 @@ async function scrapeMusinsa() {
       const pageProps = data?.props?.pageProps;
       const state = pageProps?.initialState || pageProps?.dehydratedState;
 
-      // 가능한 경로들 시도
-      const goods =
-        state?.plp?.goods ||
-        state?.goods ||
-        pageProps?.goods ||
-        pageProps?.items ||
-        data?.props?.pageProps?.initialProps?.goods ||
-        null;
+      // dehydratedState (React Query) 구조 탐색
+      const dehydrated = pageProps?.dehydratedState;
+      const queries = dehydrated?.queries || [];
+
+      // 모든 쿼리에서 goods 배열 찾기
+      let goods = null;
+      for (const q of queries) {
+        const d = q?.state?.data;
+        if (!d) continue;
+        // 가능한 경로들
+        const candidates = [
+          d?.goods, d?.list, d?.items,
+          d?.pages?.[0]?.goods, d?.pages?.[0]?.list,
+          d?.data?.goods, d?.data?.list,
+        ];
+        for (const c of candidates) {
+          if (Array.isArray(c) && c.length > 0) { goods = c; break; }
+        }
+        if (goods) break;
+      }
 
       if (goods && Array.isArray(goods)) {
         return {
@@ -55,14 +67,14 @@ async function scrapeMusinsa() {
             productUrl: `https://www.musinsa.com/app/goods/${g.goodsNo || g.no || g.id}`,
             category: g.categoryName || '',
           })).filter(g => g.name),
-          debug: `found goods array with ${goods.length} items`,
+          debug: `found goods in dehydratedState queries: ${goods.length} items`,
         };
       }
 
-      // 구조 로깅용
-      const keys = Object.keys(pageProps || {});
-      const stateKeys = Object.keys(state || {});
-      return { items: [], debug: `pageProps keys: ${keys.join(',')}, state keys: ${stateKeys.join(',')}` };
+      // 쿼리 구조 로깅
+      const firstQueryData = queries[0]?.state?.data;
+      const firstKeys = firstQueryData ? Object.keys(firstQueryData) : [];
+      return { items: [], debug: `queries: ${queries.length}, first query data keys: ${firstKeys.join(',')}` };
     });
 
     console.log('[musinsa] debug:', products.debug);
