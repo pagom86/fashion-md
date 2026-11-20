@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: '20'
       - name: Install dependencies
-        run: npm install puppeteer-extra puppeteer-extra-plugin-stealth
+        run: npm install puppeteer puppeteer-extra puppeteer-extra-plugin-stealth
       - name: Run scraper
         run: node scraper/index.js
         env:
