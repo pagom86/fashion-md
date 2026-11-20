@@ -1,8 +1,368 @@
 {
-  "updatedAt": "2026-11-20T17:59:39.763Z",
+  "updatedAt": "2026-11-20T18:01:18.376Z",
   "items": [
     {
-      "id": "f0kebe0bm8f",
+      "id": "7493901",
+      "site": "musinsa",
+      "name": "헤어리 울 랩 버튼 니트 - Brown",
+      "brand": "아워호프",
+      "price": 79000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261012/7493901/7493901_17920675279983_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7493901"
+    },
+    {
+      "id": "7566848",
+      "site": "musinsa",
+      "name": "Stripe Oversized Tee Purple",
+      "brand": "렌세",
+      "price": 59000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7566848/7566848_17926524249239_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7566848"
+    },
+    {
+      "id": "7601669",
+      "site": "musinsa",
+      "name": "A20 투웨이 사선버튼 나그랑 하이넥 후드 티셔츠_멜란지",
+      "brand": "오실롯",
+      "price": 71150,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261023/7601669/7601669_17927292192472_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7601669"
+    },
+    {
+      "id": "7561001",
+      "site": "musinsa",
+      "name": "시온 케이블 브이 긴팔 니트(머플러set)",
+      "brand": "트위",
+      "price": 69900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7561001/7561001_17924724628876_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7561001"
+    },
+    {
+      "id": "7601218",
+      "site": "musinsa",
+      "name": "레이어드 배색 라운드 긴팔 니트 (WICDNT004)",
+      "brand": "위시드",
+      "price": 79000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261023/7601218/7601218_17927248652906_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7601218"
+    },
+    {
+      "id": "118241",
+      "site": "musinsa",
+      "name": "일리고 I 산리오캐릭터즈",
+      "brand": "",
+      "price": 0,
+      "imageUrl": null,
+      "productUrl": "https://www.musinsa.com/app/goods/118241"
+    },
+    {
+      "id": "7669826",
+      "site": "musinsa",
+      "name": "데일리 오픈 헨리넥 니트 - 6COLOR",
+      "brand": "블루멀",
+      "price": 83200,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7669826/7669826_17933465706584_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7669826"
+    },
+    {
+      "id": "7704070",
+      "site": "musinsa",
+      "name": "데일리 모크넥 집업 니트 - 5COLOR",
+      "brand": "수아레",
+      "price": 59000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261104/7704070/7704070_17937706044648_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7704070"
+    },
+    {
+      "id": "7450305",
+      "site": "musinsa",
+      "name": "COTTON HENLEY LONG SLEEVE T (CHARCOAL)",
+      "brand": "아수라",
+      "price": 69000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7450305/7450305_17924735215419_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7450305"
+    },
+    {
+      "id": "7530175",
+      "site": "musinsa",
+      "name": "[소프트얀] 헤어리 레이스 브이넥 스웨터_SPKWG4TG04",
+      "brand": "스파오",
+      "price": 49900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261015/7530175/7530175_17945481185647_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7530175"
+    },
+    {
+      "id": "7630891",
+      "site": "musinsa",
+      "name": "위드 메리노 울 반집업 니트_3Color",
+      "brand": "무드인사이드",
+      "price": 139900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261027/7630891/7630891_17930835730198_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7630891"
+    },
+    {
+      "id": "7078147",
+      "site": "musinsa",
+      "name": "숄더 패널 레이어드 스티치 니트 버건디",
+      "brand": "노드유",
+      "price": 56000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20260814/7078147/7078147_17923871877977_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7078147"
+    },
+    {
+      "id": "7683810",
+      "site": "musinsa",
+      "name": "플라워 파이핑 헨리넥 스웻셔츠 브라운",
+      "brand": "오오엠엘",
+      "price": 74900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261102/7683810/7683810_17936730853027_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7683810"
+    },
+    {
+      "id": "7659451",
+      "site": "musinsa",
+      "name": "배색 헨리넥 긴소매 티셔츠  라이트 그레이",
+      "brand": "에잇세컨즈",
+      "price": 39900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261029/7659451/7659451_17932598216656_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7659451"
+    },
+    {
+      "id": "7504949",
+      "site": "musinsa",
+      "name": "헤어리 라운드 니트 아이보리",
+      "brand": "카미노",
+      "price": 68000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261013/7504949/7504949_17918798053805_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7504949"
+    },
+    {
+      "id": "7718676",
+      "site": "musinsa",
+      "name": "ZRS 스트라이프 배색 나그랑 헨리넥 롱슬리브 (오트밀/카키)",
+      "brand": "제로시",
+      "price": 68000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261105/7718676/7718676_17938652677755_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7718676"
+    },
+    {
+      "id": "7185648",
+      "site": "musinsa",
+      "name": "EASE POCKET LONG SLEEVE / KHAKI",
+      "brand": "애즈온",
+      "price": 65000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20260827/7185648/7185648_17917712275128_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7185648"
+    },
+    {
+      "id": "7357742",
+      "site": "musinsa",
+      "name": "[키스 해링 컬렉션] Barking Dog 스트라이프 옥스포드 셔츠 [스카이블루 스트라이프]",
+      "brand": "무신사 스탠다드",
+      "price": 59900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20260917/7357742/7357742_17921368376549_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7357742"
+    },
+    {
+      "id": "7560664",
+      "site": "musinsa",
+      "name": "우먼 패턴 레이어드 롱슬리브 그레이",
+      "brand": "리",
+      "price": 69000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7560664/7560664_17939687518305_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7560664"
+    },
+    {
+      "id": "7539821",
+      "site": "musinsa",
+      "name": "헤어리 믹스 컬러 라운드넥 니트_P6CKN045C",
+      "brand": "페이지플린",
+      "price": 55000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261016/7539821/7539821_17936094312147_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7539821"
+    },
+    {
+      "id": "7516033",
+      "site": "musinsa",
+      "name": "[소담 PICK] Lace Double-layered Long Sleeve Top - Black",
+      "brand": "로타입",
+      "price": 84000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261014/7516033/7516033_17944666651324_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7516033"
+    },
+    {
+      "id": "7577588",
+      "site": "musinsa",
+      "name": "Amelia Lace Halter Long Sleeve Top (Brown)",
+      "brand": "플리즈노팔로우",
+      "price": 98000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261021/7577588/7577588_17925654511264_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7577588"
+    },
+    {
+      "id": "7551551",
+      "site": "musinsa",
+      "name": "트랙 에어울 니트 자켓_3 COLOR",
+      "brand": "데이",
+      "price": 71000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261019/7551551/7551551_17923899404061_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7551551"
+    },
+    {
+      "id": "7698860",
+      "site": "musinsa",
+      "name": "아카이브 홀스 오버핏 맨투맨ge0124",
+      "brand": "젠프리",
+      "price": 57800,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261104/7698860/7698860_17937182928521_500.png",
+      "productUrl": "https://www.musinsa.com/app/goods/7698860"
+    },
+    {
+      "id": "7562121",
+      "site": "musinsa",
+      "name": "포즌 슬림 원 숄더 롱 슬리브 티",
+      "brand": "무센트",
+      "price": 51600,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7562121/7562121_17945522926911_500.jpeg",
+      "productUrl": "https://www.musinsa.com/app/goods/7562121"
+    },
+    {
+      "id": "7690974",
+      "site": "musinsa",
+      "name": "후드나그랑꽈니트 (ZYSW260740)",
+      "brand": "피그먼트",
+      "price": 87800,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261103/7690974/7690974_17936764158556_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7690974"
+    },
+    {
+      "id": "7565022",
+      "site": "musinsa",
+      "name": "ARC STRIPE LAYER SHIRT , ASH OAT",
+      "brand": "하츠코시",
+      "price": 117000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7565022/7565022_17927392302099_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7565022"
+    },
+    {
+      "id": "7601674",
+      "site": "musinsa",
+      "name": "A20 투웨이 사선버튼 나그랑 하이넥 후드 티셔츠_블랙",
+      "brand": "오실롯",
+      "price": 71150,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261023/7601674/7601674_17927292300493_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7601674"
+    },
+    {
+      "id": "7551757",
+      "site": "musinsa",
+      "name": "여성 어텀 케이블 포인트 라운드 니트 6Color TK105",
+      "brand": "비버리힐스 폴로클럽",
+      "price": 83000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261019/7551757/7551757_17923921646931_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7551757"
+    },
+    {
+      "id": "7357747",
+      "site": "musinsa",
+      "name": "[키스 해링 컬렉션] Radiant Baby 옥스포드 셔츠 [스카이 블루]",
+      "brand": "무신사 스탠다드",
+      "price": 59900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20260917/7357747/7357747_17921369733247_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7357747"
+    },
+    {
+      "id": "7646922",
+      "site": "musinsa",
+      "name": "순면 30수 뉴베이직 라운드넥 긴팔티셔츠 (2color)",
+      "brand": "베이직하우스",
+      "price": 25900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261028/7646922/7646922_17931854878450_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7646922"
+    },
+    {
+      "id": "7505689",
+      "site": "musinsa",
+      "name": "[26FW 신상] 레귤러 세미크롭 헨리넥 롱슬리브 ( 네이비 )",
+      "brand": "유니온스튜디오",
+      "price": 26600,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261013/7505689/7505689_17927429654761_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7505689"
+    },
+    {
+      "id": "7665255",
+      "site": "musinsa",
+      "name": "데일리 오픈 헨리넥 니트 - 6COLOR",
+      "brand": "블루멀",
+      "price": 83200,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7665255/7665255_17932973696887_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7665255"
+    },
+    {
+      "id": "7564389",
+      "site": "musinsa",
+      "name": "Hairy Eyelet V-Neck Tee Charcoal",
+      "brand": "렌세",
+      "price": 56000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7564389/7564389_17926459802557_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7564389"
+    },
+    {
+      "id": "7527852",
+      "site": "musinsa",
+      "name": "[민지 PICK] 드리미 홀스 그래픽 티 - 옐로우 베이지",
+      "brand": "유우프",
+      "price": 59000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261015/7527852/7527852_17942719690226_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7527852"
+    },
+    {
+      "id": "7605580",
+      "site": "musinsa",
+      "name": "헤어리 브이넥 긴팔니트(베이지)",
+      "brand": "밀리언코르",
+      "price": 54000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261023/7605580/7605580_17927417342059_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7605580"
+    },
+    {
+      "id": "7460260",
+      "site": "musinsa",
+      "name": "Alpaca Pointelle V-neck Knit, Light Mint",
+      "brand": "에트몽",
+      "price": 112000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261006/7460260/7460260_17932401267255_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7460260"
+    },
+    {
+      "id": "7574549",
+      "site": "musinsa",
+      "name": "솔루나 백 로고 라운드넥 배색 긴팔 티 남녀공용",
+      "brand": "코이리스",
+      "price": 51600,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261021/7574549/7574549_17925527876441_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7574549"
+    },
+    {
+      "id": "7659614",
+      "site": "musinsa",
+      "name": "Lia 헨리넥 래글런 롱슬리브 멜란지 그레이",
+      "brand": "매고렌 서울",
+      "price": 55500,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261029/7659614/7659614_17938568852429_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7659614"
+    },
+    {
+      "id": "7529457",
+      "site": "musinsa",
+      "name": "홀터넥 레이어드 니트_SPKWG49G04",
+      "brand": "스파오",
+      "price": 39900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261015/7529457/7529457_17945481241166_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7529457"
+    },
+    {
+      "id": "4ifpovyxt19",
       "site": "cm29",
       "name": "이스트로그\n\nBB.TYPE B-3 MOUTON / BLACK\n\n24%\n\n2,026,080\n\n조건부 무료배송\n스페셜\n신상품\n\n30",
       "brand": "",
@@ -12,7 +372,7 @@
       "category": ""
     },
     {
-      "id": "eaxbbj85zzi",
+      "id": "iv6volhtuj",
       "site": "cm29",
       "name": "이스트로그\n\nBB.A2 LEATHER FLIGHT JACKET / BLACK\n\n24%\n\n1,270,080\n\n일시품절\n\n39",
       "brand": "",
@@ -22,7 +382,7 @@
       "category": ""
     },
     {
-      "id": "fed06o9zces",
+      "id": "fjqvdq44xar",
       "site": "cm29",
       "name": "이스트로그\n\nBB.MODIFIED FISHTAIL COAT / NAVY\n\n24%\n\n1,043,280\n\n조건부 무료배송\n스페셜\n신상품\n\n19",
       "brand": "",
@@ -32,7 +392,7 @@
       "category": ""
     },
     {
-      "id": "zmrvg31bcem",
+      "id": "2h4e2ej831l",
       "site": "cm29",
       "name": "999휴머니티\n\nMODULAR LIGHT GOOSE PUFFER (GREY)\n\n398,000\n\n3,500\n일시품절\n\n353",
       "brand": "",
@@ -42,7 +402,7 @@
       "category": ""
     },
     {
-      "id": "inhdqemspxr",
+      "id": "btz5xdukq4",
       "site": "cm29",
       "name": "999휴머니티\n\nMODULAR LIGHT GOOSE PUFFER (CHARCOAL)\n\n398,000\n\n3,500\n단독\n\n311",
       "brand": "",
@@ -52,7 +412,7 @@
       "category": ""
     },
     {
-      "id": "te7tk82laha",
+      "id": "x8cavyrfj3a",
       "site": "cm29",
       "name": "999휴머니티\n\nMODULAR LIGHT GOOSE PUFFER (LIGHT GREY)\n\n398,000\n\n3,500\n단독\n\n672",
       "brand": "",
@@ -62,7 +422,7 @@
       "category": ""
     },
     {
-      "id": "te9izrai8fi",
+      "id": "79pttydo6cb",
       "site": "cm29",
       "name": "아쎄르\n\nPlain Mock Neck Pullover (Grey)\n\n19%\n\n96,100\n\n조건부 무료배송\n신상품\n\n20",
       "brand": "",
@@ -72,7 +432,7 @@
       "category": ""
     },
     {
-      "id": "qeaj0thg009",
+      "id": "i3zfv7y8cf",
       "site": "cm29",
       "name": "아쎄르\n\nNora Panel Maxi Skirt (Grey)\n\n19%\n\n136,470\n\n조건부 무료배송\n신상품\n\n13",
       "brand": "",
@@ -82,7 +442,7 @@
       "category": ""
     },
     {
-      "id": "dj0rt3hwsnw",
+      "id": "4bzn1popp8f",
       "site": "cm29",
       "name": "아쎄르\n\n[11/23 예약발송] Sutton Single Coat (Grey)\n\n16%\n\n399,350\n\n조건부 무료배송\n신상품\n\n8",
       "brand": "",
@@ -92,7 +452,7 @@
       "category": ""
     },
     {
-      "id": "6wah82ooci",
+      "id": "ps6is0enbx",
       "site": "cm29",
       "name": "겨울트렌드\n\n누아트스튜디오\n\n남녀공용 쉘리 나일론 미니멀 노트북 경량 백팩 졸업 선물_블랙\n\n58%\n\n18,680\n\n쿠폰\n조건부 무료배송\n\n9.3천",
       "brand": "",
@@ -102,7 +462,7 @@
       "category": ""
     },
     {
-      "id": "zdvsb70m0ma",
+      "id": "yurd7oy685j",
       "site": "cm29",
       "name": "겨울트렌드\n\n벤앤쿠\n\nKalm Classic-Gold/Silver(metal)\n\n29%\n\n148,200\n\n옵션비 별도\n쿠폰\n조건부 무료배송\n\n449",
       "brand": "",
@@ -112,7 +472,7 @@
       "category": ""
     },
     {
-      "id": "r8khjeluf1",
+      "id": "567mt80ccg",
       "site": "cm29",
       "name": "겨울트렌드\n\n벤앤쿠\n\n[3차 리오더]Kalm Classic-Silver(metal)\n\n29%\n\n148,200\n\n옵션비 별도\n쿠폰\n조건부 무료배송\n\n3.1천",
       "brand": "",
