@@ -4,101 +4,156 @@ const fs = require('fs');
 
 puppeteer.use(StealthPlugin());
 
-async function scrapePage(url, site) {
+async function openPage() {
   const browser = await puppeteer.launch({
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled'],
   });
-
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 800 });
   await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+  return { browser, page };
+}
 
+async function scrapeMusinsa() {
+  const { browser, page } = await openPage();
   try {
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
-    await new Promise(r => setTimeout(r, 3000));
+    await page.goto('https://www.musinsa.com/app/items/lists?category_code=&sort=new&page=1', {
+      waitUntil: 'networkidle2', timeout: 30000,
+    });
+    await new Promise(r => setTimeout(r, 2000));
 
-    const title = await page.title();
-    console.log(`[${site}] title: ${title}`);
-
-    // __NEXT_DATA__ 추출 시도
-    const nextData = await page.evaluate(() => {
+    // __NEXT_DATA__ 에서 상품 추출
+    const products = await page.evaluate(() => {
       const el = document.getElementById('__NEXT_DATA__');
-      if (el) return JSON.parse(el.textContent);
-      return null;
+      if (!el) return { items: [], debug: 'no __NEXT_DATA__' };
+
+      const data = JSON.parse(el.textContent);
+
+      // 구조 탐색
+      const pageProps = data?.props?.pageProps;
+      const state = pageProps?.initialState || pageProps?.dehydratedState;
+
+      // 가능한 경로들 시도
+      const goods =
+        state?.plp?.goods ||
+        state?.goods ||
+        pageProps?.goods ||
+        pageProps?.items ||
+        data?.props?.pageProps?.initialProps?.goods ||
+        null;
+
+      if (goods && Array.isArray(goods)) {
+        return {
+          items: goods.slice(0, 40).map(g => ({
+            id: String(g.goodsNo || g.no || g.id || Math.random().toString(36).slice(2)),
+            site: 'musinsa',
+            name: g.goodsName || g.name || '',
+            brand: g.brandName || g.brand?.name || '',
+            price: g.normalPrice || g.price || g.salePrice || 0,
+            imageUrl: g.goodsImgSrc || g.imageUrl || g.thumbnail || null,
+            productUrl: `https://www.musinsa.com/app/goods/${g.goodsNo || g.no || g.id}`,
+            category: g.categoryName || '',
+          })).filter(g => g.name),
+          debug: `found goods array with ${goods.length} items`,
+        };
+      }
+
+      // 구조 로깅용
+      const keys = Object.keys(pageProps || {});
+      const stateKeys = Object.keys(state || {});
+      return { items: [], debug: `pageProps keys: ${keys.join(',')}, state keys: ${stateKeys.join(',')}` };
     });
 
-    if (nextData) {
-      console.log(`[${site}] Found __NEXT_DATA__`);
-    }
+    console.log('[musinsa] debug:', products.debug);
+    console.log('[musinsa] items:', products.items.length);
 
-    // DOM에서 상품 추출
-    const products = await page.evaluate((siteName) => {
+    await browser.close();
+    return products.items;
+  } catch (e) {
+    console.error('[musinsa] error:', e.message);
+    await browser.close();
+    return [];
+  }
+}
+
+async function scrape29CM() {
+  const { browser, page } = await openPage();
+  try {
+    await page.goto('https://www.29cm.co.kr/home/new', {
+      waitUntil: 'networkidle2', timeout: 30000,
+    });
+    await new Promise(r => setTimeout(r, 3000));
+
+    const products = await page.evaluate(() => {
+      // __NEXT_DATA__ 시도
+      const el = document.getElementById('__NEXT_DATA__');
+      let nextItems = [];
+      if (el) {
+        const data = JSON.parse(el.textContent);
+        const pageProps = data?.props?.pageProps;
+        const items =
+          pageProps?.items ||
+          pageProps?.productList ||
+          pageProps?.initialData?.items ||
+          null;
+        if (items && Array.isArray(items)) {
+          nextItems = items;
+        }
+      }
+
+      if (nextItems.length > 0) {
+        return {
+          items: nextItems.slice(0, 40).map(g => ({
+            id: String(g.itemNo || g.id || Math.random().toString(36).slice(2)),
+            site: 'cm29',
+            name: g.itemName || g.name || '',
+            brand: g.brandNameKo || g.brandName || g.brand?.nameKo || '',
+            price: g.consumerPrice || g.price || 0,
+            imageUrl: g.imageUrl || g.thumbnail || null,
+            productUrl: `https://www.29cm.co.kr/product/detail?itemNo=${g.itemNo || g.id}`,
+            category: g.categoryName || '',
+          })).filter(g => g.name),
+          debug: `__NEXT_DATA__ items: ${nextItems.length}`,
+        };
+      }
+
+      // DOM 선택자 시도 - 더 넓은 범위
+      const links = Array.from(document.querySelectorAll('a[href*="itemNo"], a[href*="/product/"]'));
+      const seen = new Set();
       const items = [];
-
-      if (siteName === 'musinsa') {
-        // 무신사 신상품 셀렉터들
-        const candidates = [
-          ...document.querySelectorAll('li[data-no]'),
-          ...document.querySelectorAll('[class*="goods_li"]'),
-          ...document.querySelectorAll('[class*="GoodsItem"]'),
-          ...document.querySelectorAll('[class*="product-item"]'),
-        ];
-
-        const seen = new Set();
-        candidates.forEach(el => {
-          const link = el.querySelector('a[href*="/goods/"], a[href*="/app/goods/"]');
-          const img = el.querySelector('img');
-          const nameEl = el.querySelector('[class*="goods_name"], [class*="goodsName"], [class*="name"]');
-          if (!link || seen.has(link.href)) return;
-          seen.add(link.href);
-          items.push({
-            id: el.getAttribute('data-no') || Math.random().toString(36).slice(2),
-            site: 'musinsa',
-            name: nameEl ? nameEl.innerText.trim() : el.innerText.split('\n')[0].trim(),
-            brand: '',
-            price: 0,
-            imageUrl: img ? (img.src || img.dataset.src || img.dataset.lazySrc) : null,
-            productUrl: link.href.startsWith('http') ? link.href : 'https://www.musinsa.com' + link.href,
-          });
-        });
-
-      } else if (siteName === 'cm29') {
-        const candidates = [
-          ...document.querySelectorAll('[class*="ProductCard"]'),
-          ...document.querySelectorAll('[class*="product_card"]'),
-          ...document.querySelectorAll('[class*="ItemCard"]'),
-          ...document.querySelectorAll('a[href*="/product/detail"]'),
-        ];
-
-        const seen = new Set();
-        candidates.forEach(el => {
-          const link = el.tagName === 'A' ? el : el.querySelector('a[href*="/product"]');
-          const img = el.querySelector('img');
-          const nameEl = el.querySelector('[class*="name"], [class*="Name"], p');
-          if (!link || seen.has(link.href)) return;
-          seen.add(link.href);
+      links.forEach(a => {
+        if (seen.has(a.href)) return;
+        seen.add(a.href);
+        const img = a.querySelector('img') || a.closest('[class]')?.querySelector('img');
+        const textEls = a.querySelectorAll('p, span, div');
+        const name = Array.from(textEls).find(el => el.innerText?.trim().length > 2)?.innerText?.trim();
+        if (name) {
           items.push({
             id: Math.random().toString(36).slice(2),
             site: 'cm29',
-            name: nameEl ? nameEl.innerText.trim() : '',
+            name,
             brand: '',
             price: 0,
-            imageUrl: img ? (img.src || img.dataset.src) : null,
-            productUrl: link.href.startsWith('http') ? link.href : 'https://www.29cm.co.kr' + link.href,
+            imageUrl: img?.src || img?.dataset?.src || null,
+            productUrl: a.href.startsWith('http') ? a.href : 'https://www.29cm.co.kr' + a.href,
+            category: '',
           });
-        });
-      }
+        }
+      });
 
-      return items.filter(i => i.name).slice(0, 40);
-    }, site);
+      const nextEl = document.getElementById('__NEXT_DATA__');
+      const keys = nextEl ? Object.keys(JSON.parse(nextEl.textContent)?.props?.pageProps || {}) : [];
+      return { items: items.slice(0, 40), debug: `DOM links: ${links.length}, nextData pageProps: ${keys.join(',')}` };
+    });
 
-    console.log(`[${site}] Found ${products.length} products`);
+    console.log('[cm29] debug:', products.debug);
+    console.log('[cm29] items:', products.items.length);
+
     await browser.close();
-    return products;
-
+    return products.items;
   } catch (e) {
-    console.error(`[${site}] Error:`, e.message);
+    console.error('[cm29] error:', e.message);
     await browser.close();
     return [];
   }
@@ -108,8 +163,8 @@ async function main() {
   console.log('Starting scraper...');
 
   const [musinsa, cm29] = await Promise.all([
-    scrapePage('https://www.musinsa.com/app/items/lists?category_code=&sort=new&page=1', 'musinsa'),
-    scrapePage('https://www.29cm.co.kr/home/new', 'cm29'),
+    scrapeMusinsa().catch(e => { console.error(e.message); return []; }),
+    scrape29CM().catch(e => { console.error(e.message); return []; }),
   ]);
 
   const all = [...musinsa, ...cm29];
