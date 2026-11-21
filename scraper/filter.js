@@ -42,14 +42,37 @@ function callClaude(prompt) {
   });
 }
 
+const FEMALE_KEYWORDS = [
+  '여성', '우먼', 'women', 'woman', 'ladies', 'girl',
+  '크롭', 'crop', '미니스커트', '스커트', 'skirt',
+  '원피스', 'dress', '블라우스', 'blouse',
+  '브라탑', 'bralette', '코르셋',
+  '애즈온', '마뗑킴', '르브', '이세', '시스터앤',
+];
+
+function isFemaleItem(item) {
+  const text = `${item.brand} ${item.name} ${item.category || ''}`.toLowerCase();
+  return FEMALE_KEYWORDS.some(kw => text.includes(kw.toLowerCase()));
+}
+
 async function filterProducts(items) {
   const moodsStr = STYLE_PROFILE.moods.join(', ');
+  // 1차: 여성 키워드 하드 필터
+  const preFiltered = items.filter(item => {
+    if (isFemaleItem(item)) {
+      console.log(`[filter] SKIP (female): ${item.brand} - ${item.name}`);
+      return false;
+    }
+    return true;
+  });
+  console.log(`[filter] Pre-filter: ${preFiltered.length} / ${items.length} remain`);
+
   const results = [];
 
-  // 배치로 처리 (5개씩)
-  for (let i = 0; i < items.length; i += 5) {
+  // 2차: Claude AI 스타일 판단 (5개씩)
+  for (let i = 0; i < preFiltered.length; i += 5) {
     const batch = items.slice(i, i + 5);
-    const promises = batch.map(async item => {
+    const promises = preFiltered.slice(i, i + 5).map(async item => {
       try {
         const prompt = `패션 상품 정보:
 브랜드: ${item.brand || '알 수 없음'}
@@ -77,7 +100,7 @@ YES 또는 NO만 답할 것.`;
     results.push(...batchResults.filter(Boolean));
 
     // API 레이트 리밋 방지
-    if (i + 5 < items.length) await new Promise(r => setTimeout(r, 500));
+    if (i + 5 < preFiltered.length) await new Promise(r => setTimeout(r, 500));
   }
 
   return results;
