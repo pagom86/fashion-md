@@ -47,12 +47,21 @@ const FEMALE_KEYWORDS = [
   '크롭', 'crop', '미니스커트', '스커트', 'skirt',
   '원피스', 'dress', '블라우스', 'blouse',
   '브라탑', 'bralette', '코르셋',
+];
+
+// 여성 전용 브랜드 블랙리스트 (명확히 여성 브랜드만)
+const FEMALE_BRANDS = [
   '애즈온', '마뗑킴', '르브', '이세', '시스터앤',
+  '아수라', '렌세', '트위', '에이핑크',
+  '마리떼', '로맨틱크라운', '이미스', '페플',
+  '온앤온', '더엣지', '폼폼', '에딧더워드롭',
 ];
 
 function isFemaleItem(item) {
   const text = `${item.brand} ${item.name} ${item.category || ''}`.toLowerCase();
-  return FEMALE_KEYWORDS.some(kw => text.includes(kw.toLowerCase()));
+  if (FEMALE_KEYWORDS.some(kw => text.includes(kw.toLowerCase()))) return true;
+  if (FEMALE_BRANDS.some(b => item.brand?.includes(b))) return true;
+  return false;
 }
 
 async function filterProducts(items) {
