@@ -56,10 +56,12 @@ async function filterProducts(items) {
 상품명: ${item.name}
 카테고리: ${item.category || '알 수 없음'}
 
-이 상품이 다음 스타일 중 하나 이상에 해당하면 "YES", 아니면 "NO"만 답해:
-${moodsStr}
+다음 두 조건을 모두 만족해야 YES:
+1. 남성복 또는 남녀공용일 것 (여성 전용 아이템이면 무조건 NO)
+2. 아래 스타일 중 하나 이상에 해당할 것: ${moodsStr}
 
-남성복 또는 남녀공용이어야 함. YES 또는 NO만 답할 것.`;
+스커트, 원피스, 여성용 블라우스, 여성 속옷, 여성 전용 아이템은 무조건 NO.
+YES 또는 NO만 답할 것.`;
 
         const answer = await callClaude(prompt);
         const pass = answer.toUpperCase().includes('YES');
