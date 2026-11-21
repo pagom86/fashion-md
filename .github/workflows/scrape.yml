@@ -29,7 +29,8 @@ jobs:
           git config user.email "actions@github.com"
           git add data/products.json docs/index.html
           git diff --staged --quiet || git commit -m "Update products & page"
-          git push --force-with-lease
+          git pull --rebase origin main
+          git push origin main
       - name: Upload to Cafe24 FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
