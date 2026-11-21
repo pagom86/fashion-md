@@ -563,17 +563,6 @@ async function loadData() {
   empty.classList.add('show');
   msg.textContent = '불러오는 중...';
 
-  // 1) Try GitHub Pages (CORS-friendly)
-  try {
-    const res = await fetch(PAGES_URL + '?t=' + Date.now());
-    if (res.ok) {
-      const json = await res.json();
-      applyData(json);
-      if (PRODUCTS.length > 0) { empty.classList.remove('show'); renderGrid(); return; }
-    }
-  } catch(e) {}
-
-  // 2) Fall back to embedded static data
   if (window.__STATIC_DATA__) {
     applyData(window.__STATIC_DATA__);
     if (PRODUCTS.length > 0) { empty.classList.remove('show'); renderGrid(); return; }
