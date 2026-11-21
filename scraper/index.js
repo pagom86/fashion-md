@@ -4,6 +4,29 @@ const fs = require('fs');
 
 puppeteer.use(StealthPlugin());
 
+// 무신사 남성 카테고리 코드 (취향 기준)
+const MUSINSA_CATEGORIES = [
+  { code: '001', name: '아우터' },
+  { code: '002', name: '니트/스웨터' },
+  { code: '003', name: '셔츠' },
+  { code: '004', name: '티셔츠' },
+  { code: '005', name: '맨투맨/후드' },
+  { code: '006', name: '바지' },
+  { code: '007', name: '청바지' },
+  { code: '010', name: '신발' },
+  { code: '011', name: '가방' },
+  { code: '014', name: '액세서리' },
+];
+
+// 29CM 남성 카테고리 URL
+const CM29_CATEGORIES = [
+  { url: 'https://www.29cm.co.kr/category/list?category_large_code=268100&category_medium_code=268101&sort=RECENT', name: '아우터' },
+  { url: 'https://www.29cm.co.kr/category/list?category_large_code=268100&category_medium_code=268103&sort=RECENT', name: '니트/스웨터' },
+  { url: 'https://www.29cm.co.kr/category/list?category_large_code=268100&category_medium_code=268104&sort=RECENT', name: '셔츠' },
+  { url: 'https://www.29cm.co.kr/category/list?category_large_code=268100&category_medium_code=268102&sort=RECENT', name: '티셔츠' },
+  { url: 'https://www.29cm.co.kr/category/list?category_large_code=268100&category_medium_code=268106&sort=RECENT', name: '바지' },
+];
+
 async function openPage() {
   const browser = await puppeteer.launch({
     headless: 'new',
@@ -15,38 +38,26 @@ async function openPage() {
   return { browser, page };
 }
 
-async function scrapeMusinsa() {
+async function scrapeMusinsaCategory(cat) {
   const { browser, page } = await openPage();
   try {
-    await page.goto('https://www.musinsa.com/app/items/lists?category_code=&sort=new&page=1', {
-      waitUntil: 'networkidle2', timeout: 30000,
-    });
+    const url = `https://www.musinsa.com/app/items/lists?category_code=${cat.code}&gender=M&sort=new&page=1`;
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
     await new Promise(r => setTimeout(r, 2000));
 
-    // __NEXT_DATA__ 에서 상품 추출
-    const products = await page.evaluate(() => {
+    const products = await page.evaluate((catName) => {
       const el = document.getElementById('__NEXT_DATA__');
-      if (!el) return { items: [], debug: 'no __NEXT_DATA__' };
+      if (!el) return [];
 
       const data = JSON.parse(el.textContent);
+      const queries = data?.props?.pageProps?.dehydratedState?.queries || [];
 
-      // 구조 탐색
-      const pageProps = data?.props?.pageProps;
-      const state = pageProps?.initialState || pageProps?.dehydratedState;
-
-      // dehydratedState (React Query) 구조 탐색
-      const dehydrated = pageProps?.dehydratedState;
-      const queries = dehydrated?.queries || [];
-
-      // 상품 배열인지 확인 (goodsNo 또는 productNo 필드 존재 여부)
       function isProductArray(arr) {
         if (!Array.isArray(arr) || arr.length === 0) return false;
         const first = arr[0];
-        return !!(first.goodsNo || first.productNo || first.itemNo || first.goods_no ||
-                  (first.name && (first.price || first.imageUrl)));
+        return !!(first.goodsNo || first.productNo || (first.name && first.price));
       }
 
-      // 모든 쿼리에서 상품 배열 재귀 탐색
       function findProducts(obj, depth = 0) {
         if (depth > 5 || !obj || typeof obj !== 'object') return null;
         if (isProductArray(obj)) return obj;
@@ -59,9 +70,8 @@ async function scrapeMusinsa() {
         }
         for (const key of Object.keys(obj)) {
           const val = obj[key];
-          if (Array.isArray(val) && val.length > 2) {
-            if (isProductArray(val)) return val;
-          } else if (val && typeof val === 'object') {
+          if (Array.isArray(val) && val.length > 2 && isProductArray(val)) return val;
+          if (val && typeof val === 'object') {
             const found = findProducts(val, depth + 1);
             if (found) return found;
           }
@@ -71,140 +81,95 @@ async function scrapeMusinsa() {
 
       let goods = null;
       for (const q of queries) {
-        const d = q?.state?.data;
-        if (!d) continue;
-        goods = findProducts(d);
+        goods = findProducts(q?.state?.data);
         if (goods) break;
       }
 
-      if (goods && Array.isArray(goods)) {
-        const firstKeys = goods[0] ? Object.keys(goods[0]).join(',') : '';
-        const items = goods.slice(0, 40).map(g => {
-          // 모든 가능한 필드명 시도
-          const name = g.goodsName || g.name || g.goods_name || g.title || g.item_name || '';
-          const brand = g.brandName || g.brand?.name || g.brand_name || '';
-          const price = g.normalPrice || g.price || g.salePrice || g.sale_price || 0;
-          const imageUrl = g.goodsImgSrc || g.imageUrl || g.thumbnail || g.image || g.img || null;
-          const id = String(g.goodsNo || g.no || g.id || Math.random().toString(36).slice(2));
-          const productUrl = `https://www.musinsa.com/app/goods/${g.goodsNo || g.no || g.id}`;
-          return { id, site: 'musinsa', name, brand, price, imageUrl, productUrl };
-        }).filter(g => g.name);
+      if (!goods) return [];
+      return goods.slice(0, 20).map(g => ({
+        id: String(g.goodsNo || g.no || g.id || Math.random().toString(36).slice(2)),
+        site: 'musinsa',
+        name: g.goodsName || g.name || '',
+        brand: g.brandName || g.brand?.name || '',
+        price: g.normalPrice || g.price || g.salePrice || 0,
+        imageUrl: g.goodsImgSrc || g.imageUrl || g.thumbnail || null,
+        productUrl: `https://www.musinsa.com/app/goods/${g.goodsNo || g.no || g.id}`,
+        category: catName,
+      })).filter(g => g.name);
+    }, cat.name);
 
-        return {
-          items,
-          debug: `found goods[${goods.length}] keys: ${firstKeys}, mapped: ${items.length}`,
-        };
-      }
-
-      // 쿼리 구조 로깅
-      const firstQueryData = queries[0]?.state?.data;
-      const firstKeys = firstQueryData ? Object.keys(firstQueryData) : [];
-      const nestedKeys = firstQueryData ? JSON.stringify(firstQueryData).substring(0, 300) : '';
-      return { items: [], debug: `queries: ${queries.length}, data keys: ${firstKeys.join(',')}, sample: ${nestedKeys}` };
-    });
-
-    console.log('[musinsa] debug:', products.debug);
-    console.log('[musinsa] items:', products.items.length);
-
+    console.log(`[musinsa] ${cat.name}: ${products.length}개`);
     await browser.close();
-    return products.items;
+    return products;
   } catch (e) {
-    console.error('[musinsa] error:', e.message);
+    console.error(`[musinsa] ${cat.name} error:`, e.message);
     await browser.close();
     return [];
   }
 }
 
-async function scrape29CM() {
+async function scrape29CMCategory(cat) {
   const { browser, page } = await openPage();
   try {
-    await page.goto('https://www.29cm.co.kr/home/new', {
-      waitUntil: 'networkidle2', timeout: 30000,
-    });
+    await page.goto(cat.url, { waitUntil: 'networkidle2', timeout: 30000 });
     await new Promise(r => setTimeout(r, 3000));
 
-    const products = await page.evaluate(() => {
+    const products = await page.evaluate((catName) => {
       // __NEXT_DATA__ 시도
       const el = document.getElementById('__NEXT_DATA__');
-      let nextItems = [];
       if (el) {
         const data = JSON.parse(el.textContent);
         const pageProps = data?.props?.pageProps;
-        const items =
-          pageProps?.items ||
-          pageProps?.productList ||
-          pageProps?.initialData?.items ||
-          null;
-        if (items && Array.isArray(items)) {
-          nextItems = items;
-        }
-      }
-
-      if (nextItems.length > 0) {
-        return {
-          items: nextItems.slice(0, 40).map(g => ({
+        const items = pageProps?.items || pageProps?.productList || pageProps?.initialData?.items;
+        if (items && Array.isArray(items) && items.length > 0) {
+          return items.slice(0, 20).map(g => ({
             id: String(g.itemNo || g.id || Math.random().toString(36).slice(2)),
             site: 'cm29',
             name: g.itemName || g.name || '',
-            brand: g.brandNameKo || g.brandName || g.brand?.nameKo || '',
+            brand: g.brandNameKo || g.brandName || '',
             price: g.consumerPrice || g.price || 0,
             imageUrl: g.imageUrl || g.thumbnail || null,
             productUrl: `https://www.29cm.co.kr/product/detail?itemNo=${g.itemNo || g.id}`,
-            category: g.categoryName || '',
-          })).filter(g => g.name),
-          debug: `__NEXT_DATA__ items: ${nextItems.length}`,
-        };
+            category: catName,
+          })).filter(g => g.name);
+        }
       }
 
-      // DOM 선택자 - 카드 단위로 추출
-      const cards = Array.from(document.querySelectorAll('[class*="ProductCard"], [class*="product_card"], [class*="ItemCard"], [class*="item_card"]'));
-      const links = cards.length > 0 ? cards : Array.from(document.querySelectorAll('a[href*="itemNo"]'));
+      // DOM 파싱
+      const cards = Array.from(document.querySelectorAll('[class*="ProductCard"], [class*="product_card"], a[href*="itemNo"]'));
       const seen = new Set();
       const items = [];
-      links.forEach(el => {
+      cards.forEach(el => {
         const a = el.tagName === 'A' ? el : el.querySelector('a');
         if (!a || seen.has(a.href)) return;
         seen.add(a.href);
-
         const img = el.querySelector('img');
-        // 텍스트 블록에서 브랜드/이름/가격 분리
-        const rawText = el.innerText || '';
-        const parts = rawText.split('\n').map(s => s.trim()).filter(Boolean);
-        // parts: [brand, name, discount%, price, ...]
+        const parts = (el.innerText || '').split('\n').map(s => s.trim()).filter(Boolean);
         const brand = parts[0] || '';
         const name = parts[1] || parts[0] || '';
-        const priceStr = parts.find(p => p.match(/^[\d,]+$/));
+        const priceStr = parts.find(p => /^[\d,]+$/.test(p));
         const price = priceStr ? parseInt(priceStr.replace(/,/g, '')) : 0;
-        const discountStr = parts.find(p => p.match(/^\d+%$/));
-        const discount = discountStr ? parseInt(discountStr) : null;
-
+        const discountStr = parts.find(p => /^\d+%$/.test(p));
         if (name && name !== brand) {
           items.push({
             id: Math.random().toString(36).slice(2),
             site: 'cm29',
-            name,
-            brand,
-            price,
-            discount,
-            imageUrl: img?.src || img?.dataset?.src || null,
+            name, brand, price,
+            discount: discountStr ? parseInt(discountStr) : null,
+            imageUrl: img?.src || null,
             productUrl: a.href.startsWith('http') ? a.href : 'https://www.29cm.co.kr' + a.href,
-            category: '',
+            category: catName,
           });
         }
       });
+      return items.slice(0, 20);
+    }, cat.name);
 
-      const nextEl = document.getElementById('__NEXT_DATA__');
-      const keys = nextEl ? Object.keys(JSON.parse(nextEl.textContent)?.props?.pageProps || {}) : [];
-      return { items: items.slice(0, 40), debug: `DOM links: ${links.length}, nextData pageProps: ${keys.join(',')}` };
-    });
-
-    console.log('[cm29] debug:', products.debug);
-    console.log('[cm29] items:', products.items.length);
-
+    console.log(`[29cm] ${cat.name}: ${products.length}개`);
     await browser.close();
-    return products.items;
+    return products;
   } catch (e) {
-    console.error('[cm29] error:', e.message);
+    console.error(`[29cm] ${cat.name} error:`, e.message);
     await browser.close();
     return [];
   }
@@ -213,13 +178,23 @@ async function scrape29CM() {
 async function main() {
   console.log('Starting scraper...');
 
-  const [musinsa, cm29] = await Promise.all([
-    scrapeMusinsa().catch(e => { console.error(e.message); return []; }),
-    scrape29CM().catch(e => { console.error(e.message); return []; }),
-  ]);
+  // 순차적으로 긁기 (동시 너무 많으면 차단됨)
+  const musinsaItems = [];
+  for (const cat of MUSINSA_CATEGORIES) {
+    const items = await scrapeMusinsaCategory(cat).catch(() => []);
+    musinsaItems.push(...items);
+    await new Promise(r => setTimeout(r, 1000));
+  }
 
-  const all = [...musinsa, ...cm29];
-  console.log(`Total: ${musinsa.length} from Musinsa, ${cm29.length} from 29CM`);
+  const cm29Items = [];
+  for (const cat of CM29_CATEGORIES) {
+    const items = await scrape29CMCategory(cat).catch(() => []);
+    cm29Items.push(...items);
+    await new Promise(r => setTimeout(r, 1000));
+  }
+
+  const all = [...musinsaItems, ...cm29Items];
+  console.log(`Total: ${musinsaItems.length} from Musinsa, ${cm29Items.length} from 29CM = ${all.length}개`);
 
   if (!fs.existsSync('data')) fs.mkdirSync('data');
   fs.writeFileSync('data/products.json', JSON.stringify({ updatedAt: new Date().toISOString(), items: all }, null, 2));
