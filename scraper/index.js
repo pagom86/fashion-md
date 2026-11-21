@@ -193,8 +193,17 @@ async function main() {
     await new Promise(r => setTimeout(r, 1000));
   }
 
-  const all = [...musinsaItems, ...cm29Items];
-  console.log(`Total: ${musinsaItems.length} from Musinsa, ${cm29Items.length} from 29CM = ${all.length}개`);
+  const allRaw = [...musinsaItems, ...cm29Items];
+
+  // 중복 제거 (같은 id의 상품은 첫 번째만 유지)
+  const seen = new Set();
+  const all = allRaw.filter(item => {
+    if (seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
+  });
+
+  console.log(`Total: ${musinsaItems.length} from Musinsa, ${cm29Items.length} from 29CM = ${allRaw.length}개 (dedup: ${all.length}개)`);
 
   if (!fs.existsSync('data')) fs.mkdirSync('data');
   fs.writeFileSync('data/products.json', JSON.stringify({ updatedAt: new Date().toISOString(), items: all }, null, 2));
