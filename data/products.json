@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T16:04:18.093Z",
+  "updatedAt": "2026-11-21T16:46:36.962Z",
   "items": [
     {
       "id": "7669826",
@@ -19,16 +19,6 @@
       "price": 59000,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261104/7704070/7704070_17937706044648_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7704070",
-      "category": "아우터"
-    },
-    {
-      "id": "7450305",
-      "site": "musinsa",
-      "name": "COTTON HENLEY LONG SLEEVE T (CHARCOAL)",
-      "brand": "아수라",
-      "price": 69000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7450305/7450305_17924735215419_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7450305",
       "category": "아우터"
     },
     {
@@ -69,16 +59,6 @@
       "price": 59000,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261104/7704070/7704070_17937706044648_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7704070",
-      "category": "니트/스웨터"
-    },
-    {
-      "id": "7450305",
-      "site": "musinsa",
-      "name": "COTTON HENLEY LONG SLEEVE T (CHARCOAL)",
-      "brand": "아수라",
-      "price": 69000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7450305/7450305_17924735215419_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7450305",
       "category": "니트/스웨터"
     },
     {
@@ -112,16 +92,6 @@
       "category": "니트/스웨터"
     },
     {
-      "id": "7566848",
-      "site": "musinsa",
-      "name": "Stripe Oversized Tee Purple",
-      "brand": "렌세",
-      "price": 59000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7566848/7566848_17926524249239_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7566848",
-      "category": "셔츠"
-    },
-    {
       "id": "7601669",
       "site": "musinsa",
       "name": "A20 투웨이 사선버튼 나그랑 하이넥 후드 티셔츠_멜란지",
@@ -152,13 +122,13 @@
       "category": "셔츠"
     },
     {
-      "id": "7450305",
+      "id": "7630891",
       "site": "musinsa",
-      "name": "COTTON HENLEY LONG SLEEVE T (CHARCOAL)",
-      "brand": "아수라",
-      "price": 69000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7450305/7450305_17924735215419_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7450305",
+      "name": "위드 메리노 울 반집업 니트_3Color",
+      "brand": "무드인사이드",
+      "price": 139900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261027/7630891/7630891_17930835730198_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7630891",
       "category": "셔츠"
     },
     {
@@ -222,13 +192,13 @@
       "category": "티셔츠"
     },
     {
-      "id": "7450305",
+      "id": "7630891",
       "site": "musinsa",
-      "name": "COTTON HENLEY LONG SLEEVE T (CHARCOAL)",
-      "brand": "아수라",
-      "price": 69000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7450305/7450305_17924735215419_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7450305",
+      "name": "위드 메리노 울 반집업 니트_3Color",
+      "brand": "무드인사이드",
+      "price": 139900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261027/7630891/7630891_17930835730198_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7630891",
       "category": "티셔츠"
     },
     {
@@ -272,16 +242,6 @@
       "category": "맨투맨/후드"
     },
     {
-      "id": "7566848",
-      "site": "musinsa",
-      "name": "Stripe Oversized Tee Purple",
-      "brand": "렌세",
-      "price": 59000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7566848/7566848_17926524249239_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7566848",
-      "category": "맨투맨/후드"
-    },
-    {
       "id": "7601669",
       "site": "musinsa",
       "name": "A20 투웨이 사선버튼 나그랑 하이넥 후드 티셔츠_멜란지",
@@ -309,16 +269,6 @@
       "price": 59000,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261104/7704070/7704070_17937706044648_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7704070",
-      "category": "맨투맨/후드"
-    },
-    {
-      "id": "7450305",
-      "site": "musinsa",
-      "name": "COTTON HENLEY LONG SLEEVE T (CHARCOAL)",
-      "brand": "아수라",
-      "price": 69000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7450305/7450305_17924735215419_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7450305",
       "category": "맨투맨/후드"
     },
     {
@@ -360,16 +310,6 @@
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261105/7718676/7718676_17938652677755_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7718676",
       "category": "맨투맨/후드"
-    },
-    {
-      "id": "7450305",
-      "site": "musinsa",
-      "name": "COTTON HENLEY LONG SLEEVE T (CHARCOAL)",
-      "brand": "아수라",
-      "price": 69000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7450305/7450305_17924735215419_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7450305",
-      "category": "청바지"
     }
   ]
 }
