@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T18:01:18.376Z",
+  "updatedAt": "2026-11-21T04:51:23.381Z",
   "items": [
     {
       "id": "7493901",
@@ -47,13 +47,13 @@
       "productUrl": "https://www.musinsa.com/app/goods/7601218"
     },
     {
-      "id": "118241",
+      "id": "118868",
       "site": "musinsa",
-      "name": "일리고 I 산리오캐릭터즈",
+      "name": "하루만에 3만원 모은 분도 있어요",
       "brand": "",
       "price": 0,
       "imageUrl": null,
-      "productUrl": "https://www.musinsa.com/app/goods/118241"
+      "productUrl": "https://www.musinsa.com/app/goods/118868"
     },
     {
       "id": "7669826",
@@ -360,126 +360,6 @@
       "price": 39900,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261015/7529457/7529457_17945481241166_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7529457"
-    },
-    {
-      "id": "4ifpovyxt19",
-      "site": "cm29",
-      "name": "이스트로그\n\nBB.TYPE B-3 MOUTON / BLACK\n\n24%\n\n2,026,080\n\n조건부 무료배송\n스페셜\n신상품\n\n30",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202611/11f1d6a77aeed1d6aa2d27edc8a89d6f.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4332287",
-      "category": ""
-    },
-    {
-      "id": "iv6volhtuj",
-      "site": "cm29",
-      "name": "이스트로그\n\nBB.A2 LEATHER FLIGHT JACKET / BLACK\n\n24%\n\n1,270,080\n\n일시품절\n\n39",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202611/11f1d6a7c13711a6aa2def89cf313467.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4332288",
-      "category": ""
-    },
-    {
-      "id": "fjqvdq44xar",
-      "site": "cm29",
-      "name": "이스트로그\n\nBB.MODIFIED FISHTAIL COAT / NAVY\n\n24%\n\n1,043,280\n\n조건부 무료배송\n스페셜\n신상품\n\n19",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202611/11f1d6ae301fccf8b5d997bacd5e128f.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4332294",
-      "category": ""
-    },
-    {
-      "id": "2h4e2ej831l",
-      "site": "cm29",
-      "name": "999휴머니티\n\nMODULAR LIGHT GOOSE PUFFER (GREY)\n\n398,000\n\n3,500\n일시품절\n\n353",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202609/11f1aa8456f72b7e99c30de9a089eece.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4156015",
-      "category": ""
-    },
-    {
-      "id": "btz5xdukq4",
-      "site": "cm29",
-      "name": "999휴머니티\n\nMODULAR LIGHT GOOSE PUFFER (CHARCOAL)\n\n398,000\n\n3,500\n단독\n\n311",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202609/11f1aa844b6178e8946853bcc9a22c7f.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4156016",
-      "category": ""
-    },
-    {
-      "id": "x8cavyrfj3a",
-      "site": "cm29",
-      "name": "999휴머니티\n\nMODULAR LIGHT GOOSE PUFFER (LIGHT GREY)\n\n398,000\n\n3,500\n단독\n\n672",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202609/11f1aa84391728c699c33160faf805af.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4156017",
-      "category": ""
-    },
-    {
-      "id": "79pttydo6cb",
-      "site": "cm29",
-      "name": "아쎄르\n\nPlain Mock Neck Pullover (Grey)\n\n19%\n\n96,100\n\n조건부 무료배송\n신상품\n\n20",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202611/11f1dff07585bd2eb7a8b5326f96db7a.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4375059",
-      "category": ""
-    },
-    {
-      "id": "i3zfv7y8cf",
-      "site": "cm29",
-      "name": "아쎄르\n\nNora Panel Maxi Skirt (Grey)\n\n19%\n\n136,470\n\n조건부 무료배송\n신상품\n\n13",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202611/11f1dff5a5f4eed8b7a8a95b509abc3d.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4375085",
-      "category": ""
-    },
-    {
-      "id": "4bzn1popp8f",
-      "site": "cm29",
-      "name": "아쎄르\n\n[11/23 예약발송] Sutton Single Coat (Grey)\n\n16%\n\n399,350\n\n조건부 무료배송\n신상품\n\n8",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202611/11f1e0049a7c150cb7a85f6b1cf3277c.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/4375131",
-      "category": ""
-    },
-    {
-      "id": "ps6is0enbx",
-      "site": "cm29",
-      "name": "겨울트렌드\n\n누아트스튜디오\n\n남녀공용 쉘리 나일론 미니멀 노트북 경량 백팩 졸업 선물_블랙\n\n58%\n\n18,680\n\n쿠폰\n조건부 무료배송\n\n9.3천",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202606/11f16f751028ec4f9090d5dc1fe6cbc0.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/3736244",
-      "category": ""
-    },
-    {
-      "id": "yurd7oy685j",
-      "site": "cm29",
-      "name": "겨울트렌드\n\n벤앤쿠\n\nKalm Classic-Gold/Silver(metal)\n\n29%\n\n148,200\n\n옵션비 별도\n쿠폰\n조건부 무료배송\n\n449",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202603/11f11b007c9a68cea540d18946880c06.jpg?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/3758223",
-      "category": ""
-    },
-    {
-      "id": "567mt80ccg",
-      "site": "cm29",
-      "name": "겨울트렌드\n\n벤앤쿠\n\n[3차 리오더]Kalm Classic-Silver(metal)\n\n29%\n\n148,200\n\n옵션비 별도\n쿠폰\n조건부 무료배송\n\n3.1천",
-      "brand": "",
-      "price": 0,
-      "imageUrl": "https://img.29cm.co.kr/item/202610/11f1d36c8888eec1b5d977edc6986acc.png?width=144&format=webp",
-      "productUrl": "https://www.29cm.co.kr/product/catalog/3758251",
-      "category": ""
     }
   ]
 }
