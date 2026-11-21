@@ -1,0 +1,620 @@
+<title>패션 MD</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap">
+
+<style>
+  /* layout: full-bleed dark canvas, sticky filter bar, masonry-ish product grid */
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface2: #1f1f1f;
+    --border: #2a2a2a;
+    --fg: #e8e8e8;
+    --fg-muted: #666;
+    --fg-dim: #3a3a3a;
+    --accent: #c8f542;
+    --accent-fg: #0d0d0d;
+    --musinsa: #ff4a4a;
+    --cm29: #4a9eff;
+    --tag-bg: #1f1f1f;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f5f5f3;
+      --surface: #ffffff;
+      --surface2: #f0f0ee;
+      --border: #e0e0dc;
+      --fg: #111111;
+      --fg-muted: #888;
+      --fg-dim: #d0d0cc;
+      --accent: #8bc400;
+      --accent-fg: #ffffff;
+      --tag-bg: #ebebea;
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f5f3;
+    --surface: #ffffff;
+    --surface2: #f0f0ee;
+    --border: #e0e0dc;
+    --fg: #111111;
+    --fg-muted: #888;
+    --fg-dim: #d0d0cc;
+    --accent: #8bc400;
+    --accent-fg: #ffffff;
+    --tag-bg: #ebebea;
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Noto Sans KR', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100%;
+  }
+
+  /* HEADER */
+  .header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    gap: 12px;
+  }
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+  .logo span {
+    color: var(--accent);
+  }
+
+  /* FILTER BAR */
+  .filter-bar {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-bar-inner {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-width: max-content;
+  }
+  .filter-label {
+    font-size: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--fg-muted);
+    font-size: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--fg-muted); color: var(--fg); }
+  .chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-fg);
+    font-weight: 500;
+  }
+  .chip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* SITE TOGGLE */
+  .site-toggle {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .site-btn {
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: transparent;
+    font-size: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--fg-muted);
+    white-space: nowrap;
+  }
+  .site-btn:hover { border-color: var(--fg-muted); color: var(--fg); }
+  .site-btn.active-musinsa { background: var(--musinsa); border-color: var(--musinsa); color: #fff; }
+  .site-btn.active-cm29 { background: var(--cm29); border-color: var(--cm29); color: #fff; }
+  .site-btn.active-all { background: var(--surface2); border-color: var(--border); color: var(--fg); }
+
+  /* SORT + COUNT ROW */
+  .meta-row {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .result-count {
+    font-size: 12px;
+    color: var(--fg-muted);
+  }
+  .result-count strong {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .sort-select {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  /* PRODUCT GRID */
+  .grid-wrap {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-bottom: 40px;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px 14px;
+  }
+  @media (min-width: 600px) {
+    .product-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+  }
+
+  /* PRODUCT CARD */
+  .card {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .card-img {
+    aspect-ratio: 3/4;
+    background: var(--surface2);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .card:hover .card-img { transform: translateY(-2px); }
+  .card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .card-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: var(--fg-dim);
+  }
+  .card-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 3px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .badge-musinsa { background: var(--musinsa); color: #fff; }
+  .badge-cm29 { background: var(--cm29); color: #fff; }
+  .card-like {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: transform 0.15s;
+  }
+  .card-like:hover { transform: scale(1.15); }
+  .card-like.liked { background: rgba(255,74,74,0.2); }
+  .card-info { display: flex; flex-direction: column; gap: 2px; }
+  .card-brand {
+    font-size: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .card-name {
+    font-size: 13px;
+    color: var(--fg);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+  }
+  .card-price .discount {
+    color: var(--musinsa);
+    margin-right: 4px;
+  }
+  .card-price .original {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--fg-muted);
+    text-decoration: line-through;
+    margin-left: 4px;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+  }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--fg-muted);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  /* EMPTY STATE */
+  .empty {
+    padding: 80px 20px;
+    text-align: center;
+    color: var(--fg-muted);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .empty.show { display: flex; }
+  .empty-icon { font-size: 36px; margin-bottom: 4px; }
+  .empty p { font-size: 13px; }
+
+  /* ADD SITE BUTTON */
+  .add-site-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px dashed var(--border);
+    background: transparent;
+    color: var(--fg-muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .add-site-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* LOADING SKELETON */
+  .skeleton { animation: shimmer 1.5s infinite; }
+  @keyframes shimmer {
+    0% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.5; }
+  }
+  .skel-card { display: flex; flex-direction: column; gap: 8px; }
+  .skel-img { aspect-ratio: 3/4; background: var(--surface2); border-radius: 8px; }
+  .skel-line { height: 10px; background: var(--surface2); border-radius: 4px; }
+
+  /* REFRESH BTN */
+  .refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--fg-muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .refresh-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .refresh-btn svg { transition: transform 0.3s; }
+  .refresh-btn.spinning svg { transform: rotate(360deg); }
+
+  /* DEMO NOTICE */
+  .demo-notice {
+    margin: 0 max(16px, env(safe-area-inset-left, 0px));
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--fg-muted);
+    line-height: 1.6;
+  }
+  .demo-notice strong { color: var(--fg); }
+</style>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">Fashion <span>MD</span></div>
+    <div class="site-toggle">
+      <button class="site-btn active-all" data-site="all">전체</button>
+      <button class="site-btn" data-site="musinsa">무신사</button>
+      <button class="site-btn" data-site="cm29">29CM</button>
+      <button class="add-site-btn" onclick="showAddSite()">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        사이트 추가
+      </button>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <div class="filter-bar-inner">
+      <span class="filter-label">카테고리</span>
+      <button class="chip active" data-cat="all">전체</button>
+      <button class="chip" data-cat="outer">아우터</button>
+      <button class="chip" data-cat="top">상의</button>
+      <button class="chip" data-cat="bottom">하의</button>
+      <button class="chip" data-cat="shoes">신발</button>
+      <button class="chip" data-cat="acc">액세서리</button>
+      <button class="chip" data-cat="bag">가방</button>
+    </div>
+  </div>
+</div>
+
+<div class="meta-row">
+  <div class="result-count">
+    <strong id="count">0</strong>개 아이템
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="refresh-btn" id="refreshBtn" onclick="refreshFeed()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 2.5A4.5 4.5 0 1 1 2.5 6"/>
+        <path d="M10 2.5V1M10 2.5H8.5"/>
+      </svg>
+      새로고침
+    </button>
+    <select class="sort-select" id="sortSelect" onchange="renderGrid()">
+      <option value="new">최신순</option>
+      <option value="price-asc">가격 낮은순</option>
+      <option value="price-desc">가격 높은순</option>
+      <option value="discount">할인율순</option>
+    </select>
+  </div>
+</div>
+
+<div class="grid-wrap">
+  <div class="product-grid" id="productGrid"></div>
+  <div class="empty" id="emptyState">
+    <div class="empty-icon">🔍</div>
+    <p id="emptyMsg">불러오는 중...</p>
+  </div>
+</div>
+
+<script>
+window.__STATIC_DATA__ = {"updatedAt":"2026-11-21T04:51:23.381Z","items":[{"id":"7493901","site":"musinsa","name":"헤어리 울 랩 버튼 니트 - Brown","brand":"아워호프","price":79000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261012/7493901/7493901_17920675279983_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7493901"},{"id":"7566848","site":"musinsa","name":"Stripe Oversized Tee Purple","brand":"렌세","price":59000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261020/7566848/7566848_17926524249239_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7566848"},{"id":"7601669","site":"musinsa","name":"A20 투웨이 사선버튼 나그랑 하이넥 후드 티셔츠_멜란지","brand":"오실롯","price":71150,"imageUrl":"https://image.msscdn.net/images/goods_img/20261023/7601669/7601669_17927292192472_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7601669"},{"id":"7561001","site":"musinsa","name":"시온 케이블 브이 긴팔 니트(머플러set)","brand":"트위","price":69900,"imageUrl":"https://image.msscdn.net/images/goods_img/20261020/7561001/7561001_17924724628876_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7561001"},{"id":"7601218","site":"musinsa","name":"레이어드 배색 라운드 긴팔 니트 (WICDNT004)","brand":"위시드","price":79000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261023/7601218/7601218_17927248652906_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7601218"},{"id":"118868","site":"musinsa","name":"하루만에 3만원 모은 분도 있어요","brand":"","price":0,"imageUrl":null,"productUrl":"https://www.musinsa.com/app/goods/118868"},{"id":"7669826","site":"musinsa","name":"데일리 오픈 헨리넥 니트 - 6COLOR","brand":"블루멀","price":83200,"imageUrl":"https://image.msscdn.net/images/goods_img/20261030/7669826/7669826_17933465706584_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7669826"},{"id":"7704070","site":"musinsa","name":"데일리 모크넥 집업 니트 - 5COLOR","brand":"수아레","price":59000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261104/7704070/7704070_17937706044648_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7704070"},{"id":"7450305","site":"musinsa","name":"COTTON HENLEY LONG SLEEVE T (CHARCOAL)","brand":"아수라","price":69000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261002/7450305/7450305_17924735215419_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7450305"},{"id":"7530175","site":"musinsa","name":"[소프트얀] 헤어리 레이스 브이넥 스웨터_SPKWG4TG04","brand":"스파오","price":49900,"imageUrl":"https://image.msscdn.net/images/goods_img/20261015/7530175/7530175_17945481185647_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7530175"},{"id":"7630891","site":"musinsa","name":"위드 메리노 울 반집업 니트_3Color","brand":"무드인사이드","price":139900,"imageUrl":"https://image.msscdn.net/images/goods_img/20261027/7630891/7630891_17930835730198_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7630891"},{"id":"7078147","site":"musinsa","name":"숄더 패널 레이어드 스티치 니트 버건디","brand":"노드유","price":56000,"imageUrl":"https://image.msscdn.net/images/goods_img/20260814/7078147/7078147_17923871877977_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7078147"},{"id":"7683810","site":"musinsa","name":"플라워 파이핑 헨리넥 스웻셔츠 브라운","brand":"오오엠엘","price":74900,"imageUrl":"https://image.msscdn.net/images/goods_img/20261102/7683810/7683810_17936730853027_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7683810"},{"id":"7659451","site":"musinsa","name":"배색 헨리넥 긴소매 티셔츠  라이트 그레이","brand":"에잇세컨즈","price":39900,"imageUrl":"https://image.msscdn.net/images/goods_img/20261029/7659451/7659451_17932598216656_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7659451"},{"id":"7504949","site":"musinsa","name":"헤어리 라운드 니트 아이보리","brand":"카미노","price":68000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261013/7504949/7504949_17918798053805_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7504949"},{"id":"7718676","site":"musinsa","name":"ZRS 스트라이프 배색 나그랑 헨리넥 롱슬리브 (오트밀/카키)","brand":"제로시","price":68000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261105/7718676/7718676_17938652677755_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7718676"},{"id":"7185648","site":"musinsa","name":"EASE POCKET LONG SLEEVE / KHAKI","brand":"애즈온","price":65000,"imageUrl":"https://image.msscdn.net/images/goods_img/20260827/7185648/7185648_17917712275128_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7185648"},{"id":"7357742","site":"musinsa","name":"[키스 해링 컬렉션] Barking Dog 스트라이프 옥스포드 셔츠 [스카이블루 스트라이프]","brand":"무신사 스탠다드","price":59900,"imageUrl":"https://image.msscdn.net/images/goods_img/20260917/7357742/7357742_17921368376549_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7357742"},{"id":"7560664","site":"musinsa","name":"우먼 패턴 레이어드 롱슬리브 그레이","brand":"리","price":69000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261020/7560664/7560664_17939687518305_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7560664"},{"id":"7539821","site":"musinsa","name":"헤어리 믹스 컬러 라운드넥 니트_P6CKN045C","brand":"페이지플린","price":55000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261016/7539821/7539821_17936094312147_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7539821"},{"id":"7516033","site":"musinsa","name":"[소담 PICK] Lace Double-layered Long Sleeve Top - Black","brand":"로타입","price":84000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261014/7516033/7516033_17944666651324_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7516033"},{"id":"7577588","site":"musinsa","name":"Amelia Lace Halter Long Sleeve Top (Brown)","brand":"플리즈노팔로우","price":98000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261021/7577588/7577588_17925654511264_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7577588"},{"id":"7551551","site":"musinsa","name":"트랙 에어울 니트 자켓_3 COLOR","brand":"데이","price":71000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261019/7551551/7551551_17923899404061_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7551551"},{"id":"7698860","site":"musinsa","name":"아카이브 홀스 오버핏 맨투맨ge0124","brand":"젠프리","price":57800,"imageUrl":"https://image.msscdn.net/images/goods_img/20261104/7698860/7698860_17937182928521_500.png","productUrl":"https://www.musinsa.com/app/goods/7698860"},{"id":"7562121","site":"musinsa","name":"포즌 슬림 원 숄더 롱 슬리브 티","brand":"무센트","price":51600,"imageUrl":"https://image.msscdn.net/images/goods_img/20261020/7562121/7562121_17945522926911_500.jpeg","productUrl":"https://www.musinsa.com/app/goods/7562121"},{"id":"7690974","site":"musinsa","name":"후드나그랑꽈니트 (ZYSW260740)","brand":"피그먼트","price":87800,"imageUrl":"https://image.msscdn.net/images/goods_img/20261103/7690974/7690974_17936764158556_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7690974"},{"id":"7565022","site":"musinsa","name":"ARC STRIPE LAYER SHIRT , ASH OAT","brand":"하츠코시","price":117000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261020/7565022/7565022_17927392302099_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7565022"},{"id":"7601674","site":"musinsa","name":"A20 투웨이 사선버튼 나그랑 하이넥 후드 티셔츠_블랙","brand":"오실롯","price":71150,"imageUrl":"https://image.msscdn.net/images/goods_img/20261023/7601674/7601674_17927292300493_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7601674"},{"id":"7551757","site":"musinsa","name":"여성 어텀 케이블 포인트 라운드 니트 6Color TK105","brand":"비버리힐스 폴로클럽","price":83000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261019/7551757/7551757_17923921646931_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7551757"},{"id":"7357747","site":"musinsa","name":"[키스 해링 컬렉션] Radiant Baby 옥스포드 셔츠 [스카이 블루]","brand":"무신사 스탠다드","price":59900,"imageUrl":"https://image.msscdn.net/images/goods_img/20260917/7357747/7357747_17921369733247_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7357747"},{"id":"7646922","site":"musinsa","name":"순면 30수 뉴베이직 라운드넥 긴팔티셔츠 (2color)","brand":"베이직하우스","price":25900,"imageUrl":"https://image.msscdn.net/images/goods_img/20261028/7646922/7646922_17931854878450_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7646922"},{"id":"7505689","site":"musinsa","name":"[26FW 신상] 레귤러 세미크롭 헨리넥 롱슬리브 ( 네이비 )","brand":"유니온스튜디오","price":26600,"imageUrl":"https://image.msscdn.net/images/goods_img/20261013/7505689/7505689_17927429654761_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7505689"},{"id":"7665255","site":"musinsa","name":"데일리 오픈 헨리넥 니트 - 6COLOR","brand":"블루멀","price":83200,"imageUrl":"https://image.msscdn.net/images/goods_img/20261030/7665255/7665255_17932973696887_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7665255"},{"id":"7564389","site":"musinsa","name":"Hairy Eyelet V-Neck Tee Charcoal","brand":"렌세","price":56000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261020/7564389/7564389_17926459802557_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7564389"},{"id":"7527852","site":"musinsa","name":"[민지 PICK] 드리미 홀스 그래픽 티 - 옐로우 베이지","brand":"유우프","price":59000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261015/7527852/7527852_17942719690226_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7527852"},{"id":"7605580","site":"musinsa","name":"헤어리 브이넥 긴팔니트(베이지)","brand":"밀리언코르","price":54000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261023/7605580/7605580_17927417342059_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7605580"},{"id":"7460260","site":"musinsa","name":"Alpaca Pointelle V-neck Knit, Light Mint","brand":"에트몽","price":112000,"imageUrl":"https://image.msscdn.net/images/goods_img/20261006/7460260/7460260_17932401267255_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7460260"},{"id":"7574549","site":"musinsa","name":"솔루나 백 로고 라운드넥 배색 긴팔 티 남녀공용","brand":"코이리스","price":51600,"imageUrl":"https://image.msscdn.net/images/goods_img/20261021/7574549/7574549_17925527876441_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7574549"},{"id":"7659614","site":"musinsa","name":"Lia 헨리넥 래글런 롱슬리브 멜란지 그레이","brand":"매고렌 서울","price":55500,"imageUrl":"https://image.msscdn.net/images/goods_img/20261029/7659614/7659614_17938568852429_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7659614"},{"id":"7529457","site":"musinsa","name":"홀터넥 레이어드 니트_SPKWG49G04","brand":"스파오","price":39900,"imageUrl":"https://image.msscdn.net/images/goods_img/20261015/7529457/7529457_17945481241166_500.jpg","productUrl":"https://www.musinsa.com/app/goods/7529457"}]};
+
+const PAGES_URL = 'https://pagom86.github.io/fashion-md/data/products.json';
+
+let PRODUCTS = [];
+let currentSite = 'all';
+let currentCat = 'all';
+let likedItems = new Set(JSON.parse(localStorage.getItem('liked') || '[]'));
+
+function saveLiked() {
+  try { localStorage.setItem('liked', JSON.stringify([...likedItems])); } catch(e){}
+}
+
+function formatPrice(n) {
+  if (!n) return '가격 미정';
+  return n.toLocaleString('ko-KR') + '원';
+}
+
+function getFiltered() {
+  let items = PRODUCTS.filter(p => {
+    if (currentSite !== 'all' && p.site !== currentSite) return false;
+    if (currentCat !== 'all' && p.cat !== currentCat) return false;
+    return true;
+  });
+  const sort = document.getElementById('sortSelect').value;
+  if (sort === 'price-asc') items.sort((a,b) => (a.price||0) - (b.price||0));
+  else if (sort === 'price-desc') items.sort((a,b) => (b.price||0) - (a.price||0));
+  else if (sort === 'discount') items.sort((a,b) => (b.discount||0) - (a.discount||0));
+  return items;
+}
+
+function renderGrid() {
+  const items = getFiltered();
+  const grid = document.getElementById('productGrid');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('count').textContent = items.length;
+
+  if (items.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.add('show');
+    return;
+  }
+  empty.classList.remove('show');
+
+  grid.innerHTML = items.map(p => `
+    <div class="card" onclick="openItem('${p.id}')">
+      <div class="card-img">
+        ${p.imageUrl
+          ? `<img src="${p.imageUrl}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+          : ''}
+        <div class="card-img-placeholder" style="${p.imageUrl ? 'display:none' : ''}">
+          ${p.site === 'musinsa' ? '👕' : '🛍'}
+        </div>
+        <div class="card-badge badge-${p.site}">${p.site === 'musinsa' ? '무신사' : '29CM'}</div>
+        <button class="card-like ${likedItems.has(p.id) ? 'liked' : ''}"
+          onclick="event.stopPropagation(); toggleLike('${p.id}', this)">
+          ${likedItems.has(p.id) ? '❤️' : '🤍'}
+        </button>
+      </div>
+      <div class="card-info">
+        <div class="card-brand">${p.brand || ''}</div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-price">
+          ${p.discount ? `<span class="discount">${p.discount}%</span>` : ''}
+          ${formatPrice(p.price)}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleLike(id, btn) {
+  if (likedItems.has(id)) {
+    likedItems.delete(id);
+    btn.textContent = '🤍';
+    btn.classList.remove('liked');
+  } else {
+    likedItems.add(id);
+    btn.textContent = '❤️';
+    btn.classList.add('liked');
+  }
+  saveLiked();
+}
+
+function openItem(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  if (p.productUrl) window.open(p.productUrl, '_blank');
+}
+
+function applyData(json) {
+  PRODUCTS = (json.items || []).map((p, i) => ({ ...p, id: p.id || String(i) }));
+  if (json.updatedAt) {
+    const d = new Date(json.updatedAt);
+    document.getElementById('count').dataset.updated =
+      `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')} 업데이트`;
+  }
+}
+
+async function loadData() {
+  const empty = document.getElementById('emptyState');
+  const msg = document.getElementById('emptyMsg');
+  empty.classList.add('show');
+  msg.textContent = '불러오는 중...';
+
+  // 1) Try GitHub Pages (CORS-friendly)
+  try {
+    const res = await fetch(PAGES_URL + '?t=' + Date.now());
+    if (res.ok) {
+      const json = await res.json();
+      applyData(json);
+      if (PRODUCTS.length > 0) { empty.classList.remove('show'); renderGrid(); return; }
+    }
+  } catch(e) {}
+
+  // 2) Fall back to embedded static data
+  if (window.__STATIC_DATA__) {
+    applyData(window.__STATIC_DATA__);
+    if (PRODUCTS.length > 0) { empty.classList.remove('show'); renderGrid(); return; }
+  }
+
+  msg.textContent = '데이터 로딩 실패 — 새로고침 해봐';
+}
+
+function refreshFeed() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  loadData().finally(() => {
+    setTimeout(() => btn.classList.remove('spinning'), 500);
+  });
+}
+
+function showAddSite() {
+  alert('추후 지원 예정!');
+}
+
+// Site buttons
+document.querySelectorAll('.site-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.site-btn').forEach(b => b.className = 'site-btn');
+    currentSite = btn.dataset.site;
+    if (currentSite === 'all') btn.classList.add('active-all');
+    else if (currentSite === 'musinsa') btn.classList.add('active-musinsa');
+    else if (currentSite === 'cm29') btn.classList.add('active-cm29');
+    renderGrid();
+  });
+});
+
+// Category chips
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    currentCat = chip.dataset.cat;
+    renderGrid();
+  });
+});
+
+loadData();
+</script>
