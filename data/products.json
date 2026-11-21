@@ -1,15 +1,6 @@
 {
-  "updatedAt": "2026-11-21T15:00:21.570Z",
+  "updatedAt": "2026-11-21T15:27:43.187Z",
   "items": [
-    {
-      "id": "7493901",
-      "site": "musinsa",
-      "name": "헤어리 울 랩 버튼 니트 - Brown",
-      "brand": "아워호프",
-      "price": 79000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261012/7493901/7493901_17920675279983_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7493901"
-    },
     {
       "id": "7566848",
       "site": "musinsa",
@@ -27,15 +18,6 @@
       "price": 71150,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261023/7601669/7601669_17927292192472_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7601669"
-    },
-    {
-      "id": "7561001",
-      "site": "musinsa",
-      "name": "시온 케이블 브이 긴팔 니트(머플러set)",
-      "brand": "트위",
-      "price": 69900,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7561001/7561001_17924724628876_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7561001"
     },
     {
       "id": "7669826",
@@ -137,15 +119,6 @@
       "productUrl": "https://www.musinsa.com/app/goods/7698860"
     },
     {
-      "id": "7690974",
-      "site": "musinsa",
-      "name": "후드나그랑꽈니트 (ZYSW260740)",
-      "brand": "피그먼트",
-      "price": 87800,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261103/7690974/7690974_17936764158556_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7690974"
-    },
-    {
       "id": "7565022",
       "site": "musinsa",
       "name": "ARC STRIPE LAYER SHIRT , ASH OAT",
@@ -207,24 +180,6 @@
       "price": 56000,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7564389/7564389_17926459802557_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7564389"
-    },
-    {
-      "id": "7605580",
-      "site": "musinsa",
-      "name": "헤어리 브이넥 긴팔니트(베이지)",
-      "brand": "밀리언코르",
-      "price": 54000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261023/7605580/7605580_17927417342059_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7605580"
-    },
-    {
-      "id": "7460260",
-      "site": "musinsa",
-      "name": "Alpaca Pointelle V-neck Knit, Light Mint",
-      "brand": "에트몽",
-      "price": 112000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261006/7460260/7460260_17932401267255_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7460260"
     },
     {
       "id": "7574549",
