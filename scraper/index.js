@@ -4,7 +4,6 @@ const fs = require('fs');
 
 puppeteer.use(StealthPlugin());
 
-// 무신사 남성 카테고리 코드 (취향 기준)
 const MUSINSA_CATEGORIES = [
   { code: '001', name: '아우터' },
   { code: '002', name: '니트/스웨터' },
@@ -18,7 +17,8 @@ const MUSINSA_CATEGORIES = [
   { code: '014', name: '액세서리' },
 ];
 
-// 29CM 남성 카테고리 URL
+const PAGES_PER_CATEGORY = 3; // 카테고리당 긁을 페이지 수
+
 const CM29_CATEGORIES = [
   { url: 'https://www.29cm.co.kr/category/list?category_large_code=268100&category_medium_code=268101&sort=RECENT', name: '아우터' },
   { url: 'https://www.29cm.co.kr/category/list?category_large_code=268100&category_medium_code=268103&sort=RECENT', name: '니트/스웨터' },
@@ -38,10 +38,10 @@ async function openPage() {
   return { browser, page };
 }
 
-async function scrapeMusinsaCategory(cat) {
+async function scrapeMusinsaPage(cat, pageNum) {
   const { browser, page } = await openPage();
   try {
-    const url = `https://www.musinsa.com/app/items/lists?category_code=${cat.code}&gender=M&sort=new&page=1`;
+    const url = `https://www.musinsa.com/app/items/lists?category_code=${cat.code}&gender=M&sort=new&page=${pageNum}`;
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
     await new Promise(r => setTimeout(r, 2000));
 
@@ -86,7 +86,7 @@ async function scrapeMusinsaCategory(cat) {
       }
 
       if (!goods) return [];
-      return goods.slice(0, 20).map(g => ({
+      return goods.slice(0, 30).map(g => ({
         id: String(g.goodsNo || g.no || g.id || Math.random().toString(36).slice(2)),
         site: 'musinsa',
         name: g.goodsName || g.name || '',
@@ -98,14 +98,25 @@ async function scrapeMusinsaCategory(cat) {
       })).filter(g => g.name);
     }, cat.name);
 
-    console.log(`[musinsa] ${cat.name}: ${products.length}개`);
     await browser.close();
     return products;
   } catch (e) {
-    console.error(`[musinsa] ${cat.name} error:`, e.message);
+    console.error(`[musinsa] ${cat.name} p${pageNum} error:`, e.message);
     await browser.close();
     return [];
   }
+}
+
+async function scrapeMusinsaCategory(cat) {
+  const all = [];
+  for (let p = 1; p <= PAGES_PER_CATEGORY; p++) {
+    const items = await scrapeMusinsaPage(cat, p);
+    all.push(...items);
+    if (items.length === 0) break; // 없으면 중단
+    if (p < PAGES_PER_CATEGORY) await new Promise(r => setTimeout(r, 800));
+  }
+  console.log(`[musinsa] ${cat.name}: ${all.length}개`);
+  return all;
 }
 
 async function scrape29CMCategory(cat) {
@@ -115,14 +126,13 @@ async function scrape29CMCategory(cat) {
     await new Promise(r => setTimeout(r, 3000));
 
     const products = await page.evaluate((catName) => {
-      // __NEXT_DATA__ 시도
       const el = document.getElementById('__NEXT_DATA__');
       if (el) {
         const data = JSON.parse(el.textContent);
         const pageProps = data?.props?.pageProps;
         const items = pageProps?.items || pageProps?.productList || pageProps?.initialData?.items;
         if (items && Array.isArray(items) && items.length > 0) {
-          return items.slice(0, 20).map(g => ({
+          return items.slice(0, 30).map(g => ({
             id: String(g.itemNo || g.id || Math.random().toString(36).slice(2)),
             site: 'cm29',
             name: g.itemName || g.name || '',
@@ -135,7 +145,6 @@ async function scrape29CMCategory(cat) {
         }
       }
 
-      // DOM 파싱
       const cards = Array.from(document.querySelectorAll('[class*="ProductCard"], [class*="product_card"], a[href*="itemNo"]'));
       const seen = new Set();
       const items = [];
@@ -162,7 +171,7 @@ async function scrape29CMCategory(cat) {
           });
         }
       });
-      return items.slice(0, 20);
+      return items.slice(0, 30);
     }, cat.name);
 
     console.log(`[29cm] ${cat.name}: ${products.length}개`);
@@ -178,7 +187,6 @@ async function scrape29CMCategory(cat) {
 async function main() {
   console.log('Starting scraper...');
 
-  // 순차적으로 긁기 (동시 너무 많으면 차단됨)
   const musinsaItems = [];
   for (const cat of MUSINSA_CATEGORIES) {
     const items = await scrapeMusinsaCategory(cat).catch(() => []);
@@ -195,7 +203,7 @@ async function main() {
 
   const allRaw = [...musinsaItems, ...cm29Items];
 
-  // 중복 제거 (같은 id의 상품은 첫 번째만 유지)
+  // 중복 제거
   const seen = new Set();
   const all = allRaw.filter(item => {
     if (seen.has(item.id)) return false;
