@@ -26,3 +26,11 @@ jobs:
           git add data/products.json docs/index.html
           git diff --staged --quiet || git commit -m "Update products & page"
           git push --force-with-lease
+      - name: Upload to Cafe24 FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./docs/
+          server-dir: ${{ secrets.FTP_PATH }}
