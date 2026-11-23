@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T04:12:27.025Z",
+  "updatedAt": "2026-11-23T04:53:54.410Z",
   "items": [
     {
       "id": "7669826",
@@ -52,6 +52,16 @@
       "category": "아우터"
     },
     {
+      "id": "7443369",
+      "site": "musinsa",
+      "name": "남녀공용 노르딕 자카드 카라 집업 니트[IVORY](UCAGDA1)",
+      "brand": "유씨엘에이",
+      "price": 79000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7443369/7443369_17938585687086_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7443369",
+      "category": "아우터"
+    },
+    {
       "id": "7551551",
       "site": "musinsa",
       "name": "트랙 에어울 니트 자켓_3 COLOR",
@@ -79,16 +89,6 @@
       "price": 117000,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261020/7565022/7565022_17927392302099_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7565022",
-      "category": "아우터"
-    },
-    {
-      "id": "7601674",
-      "site": "musinsa",
-      "name": "A20 투웨이 사선버튼 나그랑 하이넥 후드 티셔츠_블랙",
-      "brand": "오실롯",
-      "price": 71150,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261023/7601674/7601674_17927292300493_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7601674",
       "category": "아우터"
     }
   ]
