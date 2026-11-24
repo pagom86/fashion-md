@@ -1,16 +1,6 @@
 {
-  "updatedAt": "2026-11-23T04:53:54.410Z",
+  "updatedAt": "2026-11-24T07:44:58.896Z",
   "items": [
-    {
-      "id": "7669826",
-      "site": "musinsa",
-      "name": "데일리 오픈 헨리넥 니트 - 6COLOR",
-      "brand": "블루멀",
-      "price": 83200,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7669826/7669826_17933465706584_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7669826",
-      "category": "아우터"
-    },
     {
       "id": "7704070",
       "site": "musinsa",
@@ -19,46 +9,6 @@
       "price": 59000,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261104/7704070/7704070_17937706044648_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7704070",
-      "category": "아우터"
-    },
-    {
-      "id": "7630891",
-      "site": "musinsa",
-      "name": "위드 메리노 울 반집업 니트_3Color",
-      "brand": "무드인사이드",
-      "price": 139900,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261027/7630891/7630891_17930835730198_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7630891",
-      "category": "아우터"
-    },
-    {
-      "id": "7718676",
-      "site": "musinsa",
-      "name": "ZRS 스트라이프 배색 나그랑 헨리넥 롱슬리브 (오트밀/카키)",
-      "brand": "제로시",
-      "price": 68000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261105/7718676/7718676_17938652677755_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7718676",
-      "category": "아우터"
-    },
-    {
-      "id": "7357742",
-      "site": "musinsa",
-      "name": "[키스 해링 컬렉션] Barking Dog 스트라이프 옥스포드 셔츠 [스카이블루 스트라이프]",
-      "brand": "무신사 스탠다드",
-      "price": 59900,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20260917/7357742/7357742_17921368376549_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7357742",
-      "category": "아우터"
-    },
-    {
-      "id": "7443369",
-      "site": "musinsa",
-      "name": "남녀공용 노르딕 자카드 카라 집업 니트[IVORY](UCAGDA1)",
-      "brand": "유씨엘에이",
-      "price": 79000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261002/7443369/7443369_17938585687086_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7443369",
       "category": "아우터"
     },
     {
