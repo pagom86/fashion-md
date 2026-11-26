@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-11-25T06:14:17.318Z",
+  "updatedAt": "2026-11-26T06:04:25.635Z",
   "items": [
+    {
+      "id": "7669826",
+      "site": "musinsa",
+      "name": "데일리 오픈 헨리넥 니트 - 6COLOR",
+      "brand": "블루멀",
+      "price": 83200,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7669826/7669826_17933465706584_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7669826",
+      "category": "아우터"
+    },
     {
       "id": "7704070",
       "site": "musinsa",
@@ -9,6 +19,16 @@
       "price": 59000,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261104/7704070/7704070_17937706044648_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7704070",
+      "category": "아우터"
+    },
+    {
+      "id": "7630891",
+      "site": "musinsa",
+      "name": "위드 메리노 울 반집업 니트_3Color",
+      "brand": "무드인사이드",
+      "price": 139900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261027/7630891/7630891_17930835730198_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7630891",
       "category": "아우터"
     },
     {
@@ -52,6 +72,16 @@
       "category": "아우터"
     },
     {
+      "id": "7665255",
+      "site": "musinsa",
+      "name": "데일리 오픈 헨리넥 니트 - 6COLOR",
+      "brand": "블루멀",
+      "price": 83200,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7665255/7665255_17932973696887_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7665255",
+      "category": "아우터"
+    },
+    {
       "id": "7683933",
       "site": "musinsa",
       "name": "패치 플리스 반집업 티셔츠_S6DTS003A",
@@ -89,16 +119,6 @@
       "price": 95800,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261025/7613085/7613085_17938577740445_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7613085",
-      "category": "아우터"
-    },
-    {
-      "id": "7705514",
-      "site": "musinsa",
-      "name": "다이노밴드 자수 후드티 네이비",
-      "brand": "꼼파뇨",
-      "price": 80000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261104/7705514/7705514_17937779873529_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7705514",
       "category": "아우터"
     }
   ]
