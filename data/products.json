@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-11-26T06:04:25.635Z",
+  "updatedAt": "2026-11-27T06:00:10.886Z",
   "items": [
+    {
+      "id": "7631486",
+      "site": "musinsa",
+      "name": "Merino Wool Loose V-Neck Knit, CHARCOAL",
+      "brand": "런던다다",
+      "price": 59000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261027/7631486/7631486_17931703786240_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7631486",
+      "category": "아우터"
+    },
     {
       "id": "7669826",
       "site": "musinsa",
@@ -9,6 +19,16 @@
       "price": 83200,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7669826/7669826_17933465706584_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7669826",
+      "category": "아우터"
+    },
+    {
+      "id": "7667210",
+      "site": "musinsa",
+      "name": "케이블 하이넥 집업 니트_P6DKN002C",
+      "brand": "페이지플린",
+      "price": 74000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7667210/7667210_17933280539689_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7667210",
       "category": "아우터"
     },
     {
@@ -29,6 +49,36 @@
       "price": 139900,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261027/7630891/7630891_17930835730198_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7630891",
+      "category": "아우터"
+    },
+    {
+      "id": "7683933",
+      "site": "musinsa",
+      "name": "패치 플리스 반집업 티셔츠_S6DTS003A",
+      "brand": "페이지플린",
+      "price": 89000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261102/7683933/7683933_17936108256665_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7683933",
+      "category": "아우터"
+    },
+    {
+      "id": "7787342",
+      "site": "musinsa",
+      "name": "teamCUP Training Rain Top (65798613)",
+      "brand": "푸마",
+      "price": 99000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261113/7787342/7787342_17945371315458_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7787342",
+      "category": "아우터"
+    },
+    {
+      "id": "7858989",
+      "site": "musinsa",
+      "name": "스트라이프 헤비 플리스 풀오버 (그레이/퍼플",
+      "brand": "앤드어게인",
+      "price": 105900,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261119/7858989/7858989_17950732190252_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7858989",
       "category": "아우터"
     },
     {
@@ -79,46 +129,6 @@
       "price": 83200,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7665255/7665255_17932973696887_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7665255",
-      "category": "아우터"
-    },
-    {
-      "id": "7683933",
-      "site": "musinsa",
-      "name": "패치 플리스 반집업 티셔츠_S6DTS003A",
-      "brand": "페이지플린",
-      "price": 89000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261102/7683933/7683933_17936108256665_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7683933",
-      "category": "아우터"
-    },
-    {
-      "id": "7659614",
-      "site": "musinsa",
-      "name": "Lia 헨리넥 래글런 롱슬리브 멜란지 그레이",
-      "brand": "매고렌 서울",
-      "price": 55500,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261029/7659614/7659614_17938568852429_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7659614",
-      "category": "아우터"
-    },
-    {
-      "id": "7642570",
-      "site": "musinsa",
-      "name": "후드 오버핏 니트 밴딩 팬츠 셋업 (NP4OW001L0)",
-      "brand": "나인식스뉴욕",
-      "price": 139000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261028/7642570/7642570_17931655656423_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7642570",
-      "category": "아우터"
-    },
-    {
-      "id": "7613085",
-      "site": "musinsa",
-      "name": "아론 하프 집업 슬림핏 니트 [4color]",
-      "brand": "에드리엘로스",
-      "price": 95800,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261025/7613085/7613085_17938577740445_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7613085",
       "category": "아우터"
     }
   ]
