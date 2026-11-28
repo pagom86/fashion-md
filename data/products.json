@@ -1,16 +1,6 @@
 {
-  "updatedAt": "2026-11-27T06:00:10.886Z",
+  "updatedAt": "2026-11-28T05:39:28.398Z",
   "items": [
-    {
-      "id": "7631486",
-      "site": "musinsa",
-      "name": "Merino Wool Loose V-Neck Knit, CHARCOAL",
-      "brand": "런던다다",
-      "price": 59000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261027/7631486/7631486_17931703786240_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7631486",
-      "category": "아우터"
-    },
     {
       "id": "7669826",
       "site": "musinsa",
@@ -62,26 +52,6 @@
       "category": "아우터"
     },
     {
-      "id": "7787342",
-      "site": "musinsa",
-      "name": "teamCUP Training Rain Top (65798613)",
-      "brand": "푸마",
-      "price": 99000,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261113/7787342/7787342_17945371315458_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7787342",
-      "category": "아우터"
-    },
-    {
-      "id": "7858989",
-      "site": "musinsa",
-      "name": "스트라이프 헤비 플리스 풀오버 (그레이/퍼플",
-      "brand": "앤드어게인",
-      "price": 105900,
-      "imageUrl": "https://image.msscdn.net/images/goods_img/20261119/7858989/7858989_17950732190252_500.jpg",
-      "productUrl": "https://www.musinsa.com/app/goods/7858989",
-      "category": "아우터"
-    },
-    {
       "id": "7718676",
       "site": "musinsa",
       "name": "ZRS 스트라이프 배색 나그랑 헨리넥 롱슬리브 (오트밀/카키)",
@@ -129,6 +99,26 @@
       "price": 83200,
       "imageUrl": "https://image.msscdn.net/images/goods_img/20261030/7665255/7665255_17932973696887_500.jpg",
       "productUrl": "https://www.musinsa.com/app/goods/7665255",
+      "category": "아우터"
+    },
+    {
+      "id": "7659614",
+      "site": "musinsa",
+      "name": "Lia 헨리넥 래글런 롱슬리브 멜란지 그레이",
+      "brand": "매고렌 서울",
+      "price": 55500,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261029/7659614/7659614_17938568852429_500.jpg",
+      "productUrl": "https://www.musinsa.com/app/goods/7659614",
+      "category": "아우터"
+    },
+    {
+      "id": "7764767",
+      "site": "musinsa",
+      "name": "코소 비치 아트웍 기모 맨투맨 (2COLOR)",
+      "brand": "코소",
+      "price": 89000,
+      "imageUrl": "https://image.msscdn.net/images/goods_img/20261111/7764767/7764767_17948063763264_500.png",
+      "productUrl": "https://www.musinsa.com/app/goods/7764767",
       "category": "아우터"
     }
   ]
